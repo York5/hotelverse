@@ -1,12 +1,14 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
+import Sidebar from "../components/Sidebar/Sidebar";
 
 const Routes = () => {
-    return (
-        <BrowserRouter>
-            <Switch></Switch>
-        </BrowserRouter>
-    );
+  return (
+    <BrowserRouter>
+      <Sidebar />
+      <Switch></Switch>
+    </BrowserRouter>
+  );
 };
 
 export default Routes;

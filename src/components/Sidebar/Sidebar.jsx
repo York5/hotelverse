@@ -56,6 +56,7 @@ const useStyles = makeStyles((theme) => ({
   drawerPaper: {
     backgroundColor: theme.palette.primary.main,
     width: drawerWidth,
+    marginRight: 100,
   },
   toolbar: {
     display: "flex",

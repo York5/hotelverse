@@ -157,6 +157,49 @@ const itemData = [
     rating: 7,
     location: "Canada",
   },
+  {
+    img: "https://media.istockphoto.com/vectors/flat-design-vector-of-small-town-in-autumn-landscape-vector-id879004790?k=6&m=879004790&s=170667a&w=0&h=U9j2aQL2swmYkhtxmPu-s3oZWiSWRP7ZbaHRvsUODFg=",
+    title: "Hollywood Hills Upscale",
+    price: 1000,
+    rating: 5,
+    location: "USA",
+  },
+  {
+    img: "https://maxcdn.icons8.com/app/uploads/2019/06/digital-illustration-brian-edward-miller-7.jpg",
+    title: "Nordic Arctic Hall",
+    price: 1000,
+    rating: 3,
+    location: "Russian Federation",
+  },
+  {
+    img: "https://i.pinimg.com/originals/e7/a1/e6/e7a1e6910486befc2507c6462528c3d7.png",
+    title: "Cozy House on Clandike",
+    price: 1000,
+    rating: 5,
+    location: "Los Alamos",
+  },
+
+  {
+    img: "https://img.freepik.com/free-vector/countryside-landscape-illustration-concept_23-2148655444.jpg?size=626&ext=jpg",
+    title: "Hollywood Hills Upscale",
+    price: 1,
+    rating: 2,
+    location: "New Jersey",
+  },
+  {
+    img: "https://maxcdn.icons8.com/app/uploads/2019/06/digital-illustration-brian-edward-miller-7.jpg",
+    title: "Nordic Arctic Hall",
+    price: 1000,
+    rating: 4,
+    location: "Kyrgyzstan",
+  },
+  {
+    img: "https://media.istockphoto.com/vectors/flat-design-vector-of-small-town-in-autumn-landscape-vector-id879004790?k=6&m=879004790&s=170667a&w=0&h=U9j2aQL2swmYkhtxmPu-s3oZWiSWRP7ZbaHRvsUODFg=",
+    title: "Hollywood Hills Upscale",
+    price: 1000,
+    rating: 7,
+    location: "Canada",
+  },
 ];
 
 export default function ListingBody() {
@@ -187,7 +230,7 @@ export default function ListingBody() {
                     </Box>
                     <Box className={classes.favIcon}>
                       <IconButton aria-label={`star ${item.title}`}>
-                        <FavoriteBorderIcon style={{ fill: "#fff" }} />
+                        <FavoriteBorderIcon style={{ fill: "black" }} />
                       </IconButton>
                     </Box>
                   </div>

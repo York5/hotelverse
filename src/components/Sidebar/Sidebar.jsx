@@ -13,6 +13,7 @@ import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import { Box } from "@material-ui/core";
 import logo from "./../../../src/static/img/Screenshot from 2021-08-05 12-25-34.png";
 import SettingsIcon from "@material-ui/icons/Settings";
+import { Link } from "react-router-dom";
 
 const drawerWidth = 100;
 
@@ -135,11 +136,13 @@ export default function Sidebar() {
           </Box>
 
           <Box className={classes.sidebarInner}>
-            <ListItem button key={"Home"}>
-              <ListItemIcon className={classes.listItem}>
-                <HomeIcon className={classes.sidebarIcon} />
-              </ListItemIcon>
-            </ListItem>
+            <Link to="/">
+              <ListItem button key={"Home"}>
+                <ListItemIcon className={classes.listItem}>
+                  <HomeIcon className={classes.sidebarIcon} />
+                </ListItemIcon>
+              </ListItem>
+            </Link>
 
             <ListItem button key={"Favorites"}>
               <ListItemIcon className={classes.listItem}>

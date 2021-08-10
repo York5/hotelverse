@@ -49,9 +49,13 @@ function ListingMap() {
             key: process.env.REACT_APP_MAP_KEY,
           }}
           defaultZoom={12}
-          defaultCenter={[-34.397, 150.64]}
+          defaultCenter={[40.7497668497702, -73.9857781273748]}
         >
-          <Marker text="Marker Text" lat="-34.397" lng="150.644" />
+          <Marker
+            text="Marker Text"
+            lat="40.7497668497702"
+            lng="-73.9857781273748"
+          />
         </GoogleMap>
       </div>
     </div>

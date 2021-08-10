@@ -15,6 +15,7 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import StarIcon from "@material-ui/icons/Star";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import ListingMap from "../GoogleMap/GoogleMap";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => {
   console.log(theme.palette);
@@ -28,32 +29,9 @@ const useStyles = makeStyles((theme) => {
       borderRadius: 20,
       backgroundRepeat: "no-repeat",
       backgroundSize: "cover",
-      width: 330,
+      width: 300,
+      marginBottom: 10,
     },
-    // carouselContainer: {
-    //   margin: "0 10px 0 110px",
-    // },
-    // carouselButtons: {
-    //   width: 150,
-    // },
-    // carouselNavContainer: {
-    //   display: "flex",
-    //   justifyContent: "space-between",
-    //   flexWrap: "wrap",
-    //   marginLeft: 10,
-    // },
-    // buttonShape: {
-    //   minWidth: "auto",
-    //   width: 40,
-    //   height: 40,
-    //   borderRadius: 50,
-    //   margin: 5,
-    //   backgroundColor: "white",
-    // },
-    // navPaper: {
-    //   backgroundColor: "transparent",
-    //   boxShadow: "none",
-    // },
     showMore: {
       color: theme.palette.primary.main,
     },
@@ -68,6 +46,7 @@ const useStyles = makeStyles((theme) => {
     },
     favIcon: {
       display: "flex",
+      float: "right",
     },
     cardTextInner: {
       display: "flex",
@@ -87,6 +66,7 @@ const useStyles = makeStyles((theme) => {
     locationBlock: {
       display: "flex",
       alignItems: "center",
+      opacity: "0.7",
     },
     typographyLocation: {
       fontSize: 18,
@@ -100,15 +80,15 @@ const useStyles = makeStyles((theme) => {
       marginLeft: 100,
     },
     mapContainer: {
-      width: "50%",
-      height: "50vh",
+      width: "40%",
+      height: "100vh",
       position: "sticky",
       top: 0,
     },
     cardContainer: {
       display: "flex",
       flexDirection: "column",
-      margin: 10,
+      margin: 20,
     },
   };
 });
@@ -158,11 +138,11 @@ const itemData = [
     location: "Canada",
   },
   {
-    img: "https://media.istockphoto.com/vectors/flat-design-vector-of-small-town-in-autumn-landscape-vector-id879004790?k=6&m=879004790&s=170667a&w=0&h=U9j2aQL2swmYkhtxmPu-s3oZWiSWRP7ZbaHRvsUODFg=",
+    img: "https://img.freepik.com/free-vector/countryside-landscape-illustration-concept_23-2148655444.jpg?size=626&ext=jpg",
     title: "Hollywood Hills Upscale",
-    price: 1000,
-    rating: 5,
-    location: "USA",
+    price: 1,
+    rating: 2,
+    location: "New Jersey",
   },
   {
     img: "https://maxcdn.icons8.com/app/uploads/2019/06/digital-illustration-brian-edward-miller-7.jpg",
@@ -180,13 +160,6 @@ const itemData = [
   },
 
   {
-    img: "https://img.freepik.com/free-vector/countryside-landscape-illustration-concept_23-2148655444.jpg?size=626&ext=jpg",
-    title: "Hollywood Hills Upscale",
-    price: 1,
-    rating: 2,
-    location: "New Jersey",
-  },
-  {
     img: "https://maxcdn.icons8.com/app/uploads/2019/06/digital-illustration-brian-edward-miller-7.jpg",
     title: "Nordic Arctic Hall",
     price: 1000,
@@ -200,6 +173,14 @@ const itemData = [
     rating: 7,
     location: "Canada",
   },
+  {
+    textDecoration: "none",
+    img: "https://maxcdn.icons8.com/app/uploads/2019/06/digital-illustration-brian-edward-miller-7.jpg",
+    title: "Nordic Arctic Hall",
+    price: 1000,
+    rating: 4,
+    location: "Kyrgyzstan",
+  },
 ];
 
 export default function ListingBody() {
@@ -208,44 +189,35 @@ export default function ListingBody() {
     <div className={classes.listingContainer}>
       <Container className={classes.cardsContainer}>
         {itemData.map((item) => (
-          <>
+          <Link
+            to={`/details/:${item.id}`}
+            style={{ color: "black", textDecoration: "none" }}
+          >
             <div className={classes.cardContainer}>
               <div
                 className={classes.cardDiv}
                 style={{ backgroundImage: `url(${item.img})` }}
-              ></div>
+              >
+                <Box className={classes.favIcon}>
+                  <IconButton aria-label={`star ${item.title}`}>
+                    <FavoriteBorderIcon style={{ fill: "black" }} />
+                  </IconButton>
+                </Box>
+              </div>
               <div
               // className={classes.cardInner}
               >
                 <div>
                   <div className={classes.cardTextInner}>
                     <Box>
-                      <Typography
-                        variant="h6"
-                        component="h6"
-                        className={classes.typographyCustom}
-                      >
+                      <Typography className={classes.typographyCustom}>
                         {item.title}
                       </Typography>
                     </Box>
-                    <Box className={classes.favIcon}>
-                      <IconButton aria-label={`star ${item.title}`}>
-                        <FavoriteBorderIcon style={{ fill: "black" }} />
-                      </IconButton>
-                    </Box>
-                  </div>
-
-                  <Typography
-                    variant="h6"
-                    component="h6"
-                    className={classes.typographyCustom}
-                  >
-                    US ${item.price}
-                  </Typography>
-
-                  <div className={classes.ratingBlock}>
-                    <StarIcon className={classes.starIcon} />
-                    <Typography>{item.rating}</Typography>
+                    <div className={classes.ratingBlock}>
+                      <StarIcon className={classes.starIcon} />
+                      <Typography>{item.rating}</Typography>
+                    </div>
                   </div>
                 </div>
 
@@ -259,9 +231,12 @@ export default function ListingBody() {
                     {item.location}
                   </Typography>
                 </div>
+                <Typography className={classes.typographyCustom}>
+                  ${item.price}/night
+                </Typography>
               </div>
             </div>
-          </>
+          </Link>
         ))}
       </Container>
 

@@ -1,6 +1,6 @@
 import React from "react";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import ListingBody from "../components/Listing /ListingBody";
+import DetailPage from "../Pages/DetailPage";
 import HomePage from "../Pages/HomePage";
 import ListingPage from "../Pages/ListingPage";
 
@@ -10,6 +10,7 @@ const Routes = () => {
       <Switch>
         <Route exact path="/" component={HomePage} />
         <Route exact path="/listing" component={ListingPage} />
+        <Route exact path="/details/:id" component={DetailPage} />
       </Switch>
     </BrowserRouter>
   );

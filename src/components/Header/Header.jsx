@@ -15,7 +15,7 @@ import MailIcon from "@material-ui/icons/Mail";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { Avatar, Grid } from "@material-ui/core";
 import avatarImg from "./../../static/img/Avatar.jpg";
-import landingBanner from "./../../static/img/landing_banner.jpg";
+import landingBanner from "./../../static/img/Banner.png";
 import Searchbar from "./Searchbar";
 import { useHistory } from "react-router-dom";
 
@@ -234,7 +234,7 @@ const Header = () => {
             </IconButton>
           </div>
         </Toolbar>
-        <Grid>
+        <Grid style={{ backgroundColor: "#E1EEF7" }}>
           <img style={{ width: "100%" }} src={landingBanner} />
         </Grid>
         {history.location.pathname === "/" ? <Searchbar /> : null}

@@ -22,6 +22,7 @@ const useStyles = makeStyles((theme) => ({
     position: "absolute",
     bottom: -50,
     width: "100%",
+
     // height: 80,
   },
   searchBar: {
@@ -30,6 +31,7 @@ const useStyles = makeStyles((theme) => ({
     padding: "0 8px 0 8px",
     backgroundColor: theme.palette.background.paper,
     color: theme.palette.grey,
+    boxShadow: "1px 2px 3px rgba(0,0,0,.5)",
   },
   searchBarItem: {
     height: "100%",

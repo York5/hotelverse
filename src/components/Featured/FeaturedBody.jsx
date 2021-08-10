@@ -14,6 +14,7 @@ import FeaturedNav from "./FeaturedNav";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import StarIcon from "@material-ui/icons/Star";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
+import { Link } from "react-router-dom";
 
 const useStyles = makeStyles((theme) => {
   console.log(theme.palette);
@@ -248,10 +249,12 @@ export default function FeaturedBody() {
             textColor="primary"
             aria-label="disabled tabs example"
           >
-            <Tab
-              className={(classes.navItem, classes.showMore)}
-              label="Show More"
-            />
+            <Link to="/listing">
+              <Tab
+                className={(classes.navItem, classes.showMore)}
+                label="Show More"
+              />
+            </Link>
           </Tabs>
         </Paper>
       </div>

@@ -16,7 +16,7 @@ defmodule HotelverseWeb.Router do
   scope "/", HotelverseWeb do
     pipe_through :browser
 
-    get "/", PageController, :index
+    get "/*path", PageController, :index
     resources "/users", UserController
   end
 

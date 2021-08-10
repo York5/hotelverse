@@ -190,6 +190,7 @@ export default function ListingBody() {
       <Container className={classes.cardsContainer}>
         {itemData.map((item) => (
           <Link
+            key={item.id}
             to={`/details/:${item.id}`}
             style={{ color: "black", textDecoration: "none" }}
           >

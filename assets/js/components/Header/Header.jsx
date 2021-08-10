@@ -14,8 +14,6 @@ import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import MoreIcon from "@material-ui/icons/MoreVert";
 import { Avatar, Grid } from "@material-ui/core";
-import avatarImg from "./../../static/img/Avatar.jpg";
-import landingBanner from "./../../static/img/Banner.png";
 import Searchbar from "./Searchbar";
 import { useHistory } from "react-router-dom";
 
@@ -219,7 +217,7 @@ const Header = () => {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <Avatar src={avatarImg}>UK</Avatar>
+              <Avatar src="images/avatar.jpg">UK</Avatar>
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
@@ -235,7 +233,7 @@ const Header = () => {
           </div>
         </Toolbar>
         <Grid style={{ backgroundColor: "#E1EEF7" }}>
-          <img style={{ width: "100%" }} src={landingBanner} />
+          <img style={{ width: "100%" }} src="images/banner.png" alt="Banner" />
         </Grid>
         {history.location.pathname === "/" ? <Searchbar /> : null}
       </AppBar>

@@ -111,7 +111,7 @@ const Searchbar = () => {
               control={control}
               defaultValue=""
               render={({ field }) => (
-                <SearchableSelect customProps={{ ...searchProps }} />
+                <SearchableSelect {...field} customProps={{ ...searchProps }} />
               )}
             />
           </Grid>

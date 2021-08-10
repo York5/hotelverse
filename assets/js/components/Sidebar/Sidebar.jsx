@@ -11,7 +11,6 @@ import FavoriteIcon from "@material-ui/icons/Favorite";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
 import { Box } from "@material-ui/core";
-import logo from "./../../../src/static/img/Screenshot from 2021-08-05 12-25-34.png";
 import SettingsIcon from "@material-ui/icons/Settings";
 import { Link } from "react-router-dom";
 
@@ -131,7 +130,11 @@ export default function Sidebar() {
         <List className={classes.sidebarList}>
           <Box>
             <ListItem button key={"Home"}>
-              <img className={classes.sidebarLogo} src={logo} alt="" />
+              <img
+                className={classes.sidebarLogo}
+                src="images/logo.png"
+                alt="Logo"
+              />
             </ListItem>
           </Box>
 

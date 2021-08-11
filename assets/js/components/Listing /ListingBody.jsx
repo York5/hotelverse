@@ -191,7 +191,7 @@ export default function ListingBody() {
         {itemData.map((item) => (
           <Link
             key={item.id}
-            to={`/details/:${item.id}`}
+            to={`/details/${1}`}
             style={{ color: "black", textDecoration: "none" }}
           >
             <div className={classes.cardContainer}>

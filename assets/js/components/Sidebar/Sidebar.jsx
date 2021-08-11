@@ -132,7 +132,7 @@ export default function Sidebar() {
             <ListItem button key={"Home"}>
               <img
                 className={classes.sidebarLogo}
-                src="images/logo.png"
+                src="/images/logo.png"
                 alt="Logo"
               />
             </ListItem>

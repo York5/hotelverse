@@ -8,22 +8,29 @@ defmodule HotelverseWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Pow.Plug.Session, otp_app: :hotelverse
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug HotelverseWeb.APIAuthPlug, otp_app: :hotelverse
   end
 
-  pipeline :protected do
-    plug Pow.Plug.RequireAuthenticated,
-      error_handler: Pow.Phoenix.PlugErrorHandler
+  pipeline :api_protected do
+    plug Pow.Plug.RequireAuthenticated, error_handler: HotelverseWeb.APIAuthErrorHandler
   end
 
-  # Other scopes may use custom stacks.
-  scope "/api", HotelverseWeb do
+  scope "/api/v1", HotelverseWeb.API.V1, as: :api_v1 do
     pipe_through :api
 
-    # resources "/properties", PropertyController, except: [:new, :edit]
+    resources "/registration", RegistrationController, singleton: true, only: [:create]
+    resources "/session", SessionController, singleton: true, only: [:create, :delete]
+    post "/session/renew", SessionController, :renew
+  end
+
+  scope "/api/v1", HotelverseWeb.API.V1, as: :api_v1 do
+    pipe_through [:api, :api_protected]
+
     resources "/properties", PropertyController
     resources "/images", ImageController
     resources "/extras", ExtraController
@@ -31,11 +38,21 @@ defmodule HotelverseWeb.Router do
     resources "/bookings", BookingController
   end
 
-  scope "/" do
-    pipe_through :browser
+  scope "/api/v1", HotelverseWeb.API.V1, as: :api_v1 do
+    pipe_through :api
 
-    pow_routes()
+    resources "/properties", PropertyController, except: [:new, :edit]
+    resources "/images", ImageController, except: [:new, :edit]
+    resources "/extras", ExtraController, except: [:new, :edit]
+    resources "/features", FeatureController, except: [:new, :edit]
   end
+
+
+  # scope "/" do
+  #   pipe_through :browser
+
+  #   pow_routes()
+  # end
 
   scope "/", HotelverseWeb do
     pipe_through :browser

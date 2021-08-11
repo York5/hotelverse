@@ -13,9 +13,9 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import { Avatar, Grid } from "@material-ui/core";
+import { Avatar, Button, Grid } from "@material-ui/core";
 import Searchbar from "./Searchbar";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 const drawerWidth = 100;
 
@@ -96,6 +96,10 @@ const useStyles = makeStyles((theme) => {
       [theme.breakpoints.up("md")]: {
         display: "none",
       },
+    },
+    addButton: {
+      margin: 10,
+      maxHeight: 50,
     },
   };
 });
@@ -209,6 +213,15 @@ const Header = () => {
           {renderMiniSearchBar()}
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
+            <Link to="/add" style={{ textDecoration: "none" }}>
+              <Button
+                variant="contained"
+                color="secondary"
+                className={classes.addButton}
+              >
+                Become a Host
+              </Button>
+            </Link>
             <IconButton
               edge="end"
               aria-label="account of current user"
@@ -217,7 +230,7 @@ const Header = () => {
               onClick={handleProfileMenuOpen}
               color="inherit"
             >
-              <Avatar src="images/avatar.jpg">UK</Avatar>
+              <Avatar src="/images/avatar.jpg">UK</Avatar>
             </IconButton>
           </div>
           <div className={classes.sectionMobile}>
@@ -233,7 +246,11 @@ const Header = () => {
           </div>
         </Toolbar>
         <Grid style={{ backgroundColor: "#E1EEF7" }}>
-          <img style={{ width: "100%" }} src="images/banner.png" alt="Banner" />
+          <img
+            style={{ width: "100%" }}
+            src="/images/mountainBanner.jpg"
+            alt="Banner"
+          />
         </Grid>
         {history.location.pathname === "/" ? <Searchbar /> : null}
       </AppBar>

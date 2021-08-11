@@ -1,5 +1,6 @@
 defmodule HotelverseWeb.Router do
   use HotelverseWeb, :router
+  use Pow.Phoenix.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -13,23 +14,35 @@ defmodule HotelverseWeb.Router do
     plug :accepts, ["json"]
   end
 
+  pipeline :protected do
+    plug Pow.Plug.RequireAuthenticated,
+      error_handler: Pow.Phoenix.PlugErrorHandler
+  end
+
   # Other scopes may use custom stacks.
   scope "/api", HotelverseWeb do
     pipe_through :api
 
     # resources "/properties", PropertyController, except: [:new, :edit]
     resources "/properties", PropertyController
-    resources "/images", ImagesController
+    resources "/images", ImageController
     resources "/extras", ExtraController
     resources "/features", FeatureController
     resources "/bookings", BookingController
   end
 
+  scope "/" do
+    pipe_through :browser
+
+    pow_routes()
+  end
+
   scope "/", HotelverseWeb do
     pipe_through :browser
 
-    get "/*path", PageController, :index
-    resources "/users", UserController
+    get "/", PageController, :index
+    get "/listing", PageController, :index
+    get "/details", PageController, :index
   end
 
 

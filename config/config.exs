@@ -18,6 +18,10 @@ config :hotelverse, HotelverseWeb.Endpoint,
   pubsub_server: Hotelverse.PubSub,
   live_view: [signing_salt: "LOV6Rpeq"]
 
+config :hotelverse, :pow,
+  user: Hotelverse.Users.User,
+  repo: Hotelverse.Repo
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

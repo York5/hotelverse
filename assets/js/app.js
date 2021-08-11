@@ -40,7 +40,7 @@ const theme = createTheme({
       secondary: "#000",
     },
     background: {
-      // paper: "#E1EEF7",
+      paper: "#E1EEF7",
       default: "#E1EEF7",
     },
   },

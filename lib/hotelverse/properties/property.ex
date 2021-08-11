@@ -6,7 +6,7 @@ defmodule Hotelverse.Properties.Property do
     field :description, :string
     field :location, :string
     field :price, :float
-    field :rating, :float
+    field :rating, :float, default: 0.0
     field :title, :string
 
     timestamps()
@@ -16,6 +16,6 @@ defmodule Hotelverse.Properties.Property do
   def changeset(property, attrs) do
     property
     |> cast(attrs, [:title, :price, :rating, :location, :description])
-    |> validate_required([:title, :price, :rating, :location, :description])
+    |> validate_required([:title, :price, :location, :description])
   end
 end

@@ -13,6 +13,18 @@ defmodule HotelverseWeb.Router do
     plug :accepts, ["json"]
   end
 
+  # Other scopes may use custom stacks.
+  scope "/api", HotelverseWeb do
+    pipe_through :api
+
+    # resources "/properties", PropertyController, except: [:new, :edit]
+    resources "/properties", PropertyController
+    resources "/images", ImagesController
+    resources "/extras", ExtraController
+    resources "/features", FeatureController
+    resources "/bookings", BookingController
+  end
+
   scope "/", HotelverseWeb do
     pipe_through :browser
 
@@ -20,10 +32,6 @@ defmodule HotelverseWeb.Router do
     resources "/users", UserController
   end
 
-  # Other scopes may use custom stacks.
-  # scope "/api", HotelverseWeb do
-  #   pipe_through :api
-  # end
 
   # Enables LiveDashboard only for development
   #

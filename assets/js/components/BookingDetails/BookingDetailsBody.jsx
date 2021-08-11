@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import ImageList from "@material-ui/core/ImageList";
 import ImageListItem from "@material-ui/core/ImageListItem";
@@ -7,9 +7,11 @@ import IconButton from "@material-ui/core/IconButton";
 import StarBorderIcon from "@material-ui/icons/StarBorder";
 import DetailChips from "./ChipsBlock";
 import BookingDetailsTabs from "./BookingDetaisTabs";
-import { Typography } from "@material-ui/core";
+import { Button, Typography } from "@material-ui/core";
 import BookingDetailsFeatures from "./BookingDetailsFeatures";
 import BookingForm from "./BookingForm/BookingForm";
+import { Link, useParams } from "react-router-dom";
+import { useProperties } from "../contexts/PropertyContext";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -31,6 +33,14 @@ const useStyles = makeStyles((theme) => ({
     height: "60vh",
     // Promote the list into its own layer in Chrome. This cost memory, but helps keep FPS high.
     transform: "translateZ(0)",
+  },
+  chipsBlock: {
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center",
+  },
+  editButton: {
+    maxHeight: 30,
   },
   titleBar: {
     background:
@@ -98,6 +108,17 @@ const itemData = [
 export default function BookingDetailsBody() {
   const classes = useStyles();
 
+  const { id } = useParams();
+  const { getPropertyDetails, propertyDetails } = useProperties();
+
+  useEffect(() => {
+    getPropertyDetails(id);
+  }, [id]);
+
+  useEffect(() => {
+    console.log(propertyDetails);
+  }, [propertyDetails]);
+
   return (
     <div className={classes.root}>
       <div className={classes.detailsBlock}>
@@ -131,20 +152,31 @@ export default function BookingDetailsBody() {
             </ImageListItem>
           ))}
         </ImageList>
-        <DetailChips />
+        <div className={classes.chipsBlock}>
+          <DetailChips />
+          <Link to={`/edit/${id}`} style={{ textDecoration: "none" }}>
+            <Button
+              variant="contained"
+              color="secondary"
+              className={classes.editButton}
+            >
+              Edit Property
+            </Button>
+          </Link>
+        </div>
         <Typography
           variant={"h5"}
           component={"h5"}
           className={classes.detailsTitle}
         >
-          West Coast Luxury Real Estate
+          {propertyDetails.title}
         </Typography>
         <Typography
           variant={"p"}
           component={"p"}
           className={classes.addressText}
         >
-          10937 Shadow street No.12. East-Side LA
+          {propertyDetails.location}
         </Typography>
         <BookingDetailsTabs
         // className={classes.descriptionNav}
@@ -154,14 +186,7 @@ export default function BookingDetailsBody() {
           component="p"
           className={classes.detailsDescription}
         >
-          Unwind at this stunning French Provencal beachside cottage. The house
-          was lovingly built with stone floors, high-beamed ceilings, and
-          antique details for a luxurious yet charming feel. Enjoy the sea and
-          mountain views from the pool and lush garden. The house is located in
-          the enclave of Llandudno Beach, a locals-only spot with unspoilt, fine
-          white sand and curling surfing waves. Although shops and restaurants
-          are only a five-minute drive away, the area feels peaceful and
-          secluded.
+          {propertyDetails.description}
         </Typography>
 
         <BookingDetailsFeatures />

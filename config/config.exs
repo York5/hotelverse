@@ -8,7 +8,8 @@
 use Mix.Config
 
 config :hotelverse,
-  ecto_repos: [Hotelverse.Repo]
+  ecto_repos: [Hotelverse.Repo],
+  migration_primary_key: [name: :id, type: :binary_id]
 
 # Configures the endpoint
 config :hotelverse, HotelverseWeb.Endpoint,
@@ -17,6 +18,10 @@ config :hotelverse, HotelverseWeb.Endpoint,
   render_errors: [view: HotelverseWeb.ErrorView, accepts: ~w(html json), layout: false],
   pubsub_server: Hotelverse.PubSub,
   live_view: [signing_salt: "LOV6Rpeq"]
+
+config :hotelverse, :pow,
+  user: Hotelverse.Users.User,
+  repo: Hotelverse.Repo
 
 # Configures Elixir's Logger
 config :logger, :console,

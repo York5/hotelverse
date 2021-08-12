@@ -1,11 +1,12 @@
 defmodule Hotelverse.Content.Extra do
-  use Ecto.Schema
+  use Hotelverse.Schema
   import Ecto.Changeset
 
   schema "extras" do
+    field :property_id, :integer
     field :name, :string
     field :price, :float
-    field :property_id, :integer
+    field :icon, :string
 
     timestamps()
   end
@@ -13,7 +14,7 @@ defmodule Hotelverse.Content.Extra do
   @doc false
   def changeset(extra, attrs) do
     extra
-    |> cast(attrs, [:property_id, :name, :price])
-    |> validate_required([:property_id, :name, :price])
+    |> cast(attrs, [:property_id, :name, :price, :icon])
+    |> validate_required([:property_id, :name, :price, :icon])
   end
 end

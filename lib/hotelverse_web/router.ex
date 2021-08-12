@@ -1,5 +1,6 @@
 defmodule HotelverseWeb.Router do
   use HotelverseWeb, :router
+  use Pow.Phoenix.Router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -7,29 +8,58 @@ defmodule HotelverseWeb.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
+    plug Pow.Plug.Session, otp_app: :hotelverse
   end
 
   pipeline :api do
     plug :accepts, ["json"]
+    plug HotelverseWeb.APIAuthPlug, otp_app: :hotelverse
   end
 
-  # Other scopes may use custom stacks.
-  scope "/api", HotelverseWeb do
+  pipeline :api_protected do
+    plug Pow.Plug.RequireAuthenticated, error_handler: HotelverseWeb.APIAuthErrorHandler
+  end
+
+  scope "/api/v1", HotelverseWeb.API.V1, as: :api_v1 do
     pipe_through :api
 
-    # resources "/properties", PropertyController, except: [:new, :edit]
+    resources "/registration", RegistrationController, singleton: true, only: [:create]
+    resources "/session", SessionController, singleton: true, only: [:create, :delete]
+    post "/session/renew", SessionController, :renew
+  end
+
+  scope "/api/v1", HotelverseWeb.API.V1, as: :api_v1 do
+    pipe_through [:api, :api_protected]
+
     resources "/properties", PropertyController
-    resources "/images", ImagesController
+    resources "/images", ImageController
     resources "/extras", ExtraController
     resources "/features", FeatureController
     resources "/bookings", BookingController
   end
 
+  scope "/api/v1", HotelverseWeb.API.V1, as: :api_v1 do
+    pipe_through :api
+
+    resources "/properties", PropertyController, except: [:new, :edit]
+    resources "/images", ImageController, except: [:new, :edit]
+    resources "/extras", ExtraController, except: [:new, :edit]
+    resources "/features", FeatureController, except: [:new, :edit]
+  end
+
+
+  # scope "/" do
+  #   pipe_through :browser
+
+  #   pow_routes()
+  # end
+
   scope "/", HotelverseWeb do
     pipe_through :browser
 
     get "/*path", PageController, :index
-    resources "/users", UserController
+    # get "/listing", PageController, :index
+    # get "/details", PageController, :index
   end
 
 

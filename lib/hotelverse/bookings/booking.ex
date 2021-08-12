@@ -1,5 +1,5 @@
 defmodule Hotelverse.Bookings.Booking do
-  use Ecto.Schema
+  use Hotelverse.Schema
   import Ecto.Changeset
 
   schema "bookings" do

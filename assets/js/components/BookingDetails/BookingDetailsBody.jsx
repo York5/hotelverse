@@ -128,32 +128,34 @@ export default function BookingDetailsBody() {
           className={classes.imageList}
           style={{ borderRadius: 20 }}
         >
-          {itemData.map((item) => (
-            <ImageListItem
-              key={item.img}
-              cols={item.featured ? 2 : 1}
-              rows={item.featured ? 2 : 1}
-            >
-              <img src={item.img} alt={item.title} />
-              <ImageListItemBar
-                title={item.title}
-                position="top"
-                actionIcon={
-                  <IconButton
-                    aria-label={`star ${item.title}`}
-                    className={classes.icon}
-                  >
-                    <StarBorderIcon />
-                  </IconButton>
-                }
-                actionPosition="left"
-                className={classes.titleBar}
-              />
-            </ImageListItem>
-          ))}
+          {propertyDetails.images &&
+            propertyDetails.images.map((imgUrl, index) => (
+              <ImageListItem
+                key={index}
+                cols={!index ? 2 : 1}
+                rows={!index ? 2 : 1}
+              >
+                <img src={imgUrl} />
+                <ImageListItemBar
+                  title={propertyDetails.title}
+                  position="top"
+                  actionIcon={
+                    <IconButton
+                      aria-label={`star ${propertyDetails.title}`}
+                      className={classes.icon}
+                    >
+                      <StarBorderIcon />
+                    </IconButton>
+                  }
+                  actionPosition="left"
+                  className={classes.titleBar}
+                />
+              </ImageListItem>
+            ))}
         </ImageList>
+
         <div className={classes.chipsBlock}>
-          <DetailChips />
+          <DetailChips rating={propertyDetails.rating} />
           <Link to={`/edit/${id}`} style={{ textDecoration: "none" }}>
             <Button
               variant="contained"
@@ -165,31 +167,25 @@ export default function BookingDetailsBody() {
           </Link>
         </div>
         <Typography
-          variant={"h5"}
-          component={"h5"}
+          variant="h5"
+          component="h5"
           className={classes.detailsTitle}
         >
           {propertyDetails.title}
         </Typography>
-        <Typography
-          variant={"p"}
-          component={"p"}
-          className={classes.addressText}
-        >
+        <Typography component="p" className={classes.addressText}>
           {propertyDetails.location}
         </Typography>
         <BookingDetailsTabs
         // className={classes.descriptionNav}
         />
-        <Typography
-          variant="p"
-          component="p"
-          className={classes.detailsDescription}
-        >
+        <Typography component="p" className={classes.detailsDescription}>
           {propertyDetails.description}
         </Typography>
 
-        <BookingDetailsFeatures />
+        {propertyDetails.features && (
+          <BookingDetailsFeatures features={propertyDetails.features} />
+        )}
       </div>
       <div className={classes.bookingForm}>
         <BookingForm />

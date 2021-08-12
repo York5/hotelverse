@@ -4,12 +4,14 @@ defmodule Hotelverse.Properties.Property do
 
   schema "properties" do
     field :title, :string
+    field :max_adults, :integer, default: 1
+    field :max_kids, :integer, default: 0
     field :price, :float
-    field :max_adults, :integer
-    field :max_kids, :integer
     field :rating, :float, default: 0.0
     field :location, :string
+    field :features, {:array, :binary_id}, default: []
     field :description, :string
+    field :images, {:array, :string}, default: []
 
     timestamps()
   end
@@ -17,7 +19,7 @@ defmodule Hotelverse.Properties.Property do
   @doc false
   def changeset(property, attrs) do
     property
-    |> cast(attrs, [:title, :price, :rating, :location, :description])
-    |> validate_required([:title, :price, :location, :description])
+    |> cast(attrs, [:title, :max_adults, :max_kids, :price, :rating, :location, :features, :description, :images])
+    |> validate_required([:title, :max_adults, :max_kids, :price, :rating, :location, :features, :description, :images])
   end
 end

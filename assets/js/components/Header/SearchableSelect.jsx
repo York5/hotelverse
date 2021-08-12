@@ -13,7 +13,7 @@ const Control = ({ children, ...props }) => {
   );
 };
 
-const SearchableSelect = ({ customProps, ...props }) => {
+const SearchableSelect = React.forwardRef(({ customProps, ...props }, ref) => {
   const styles = {
     control: (css, state) => ({
       ...css,
@@ -51,7 +51,6 @@ const SearchableSelect = ({ customProps, ...props }) => {
       options={customProps.options}
       styles={styles}
       theme={(theme) => {
-        console.log("theme", theme);
         return {
           ...theme,
           colors: {
@@ -79,6 +78,6 @@ const SearchableSelect = ({ customProps, ...props }) => {
       }}
     />
   );
-};
+});
 
 export default SearchableSelect;

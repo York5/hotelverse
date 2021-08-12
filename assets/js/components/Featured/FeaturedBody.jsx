@@ -15,9 +15,9 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import StarIcon from "@material-ui/icons/Star";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import { Link } from "react-router-dom";
+import { URL_PATHS } from "../helpers/consts";
 
 const useStyles = makeStyles((theme) => {
-  console.log(theme.palette);
   return {
     cardDiv: {
       height: 250,
@@ -152,112 +152,101 @@ export default function FeaturedBody() {
   let carousel;
   const classes = useStyles();
   return (
-    <>
-      <div className={classes.carouselContainer}>
-        <div className={classes.carouselNavContainer}>
-          <div className={classes.carouselNav}>
-            <FeaturedNav />
-          </div>
-          <div className={classes.carouselButtons}>
-            <Button
-              onClick={() => carousel.slidePrev()}
-              variant="contained"
-              className={classes.buttonShape}
-            >
-              {"<"}
-            </Button>
-            <Button
-              onClick={() => carousel.slideNext()}
-              variant="contained"
-              className={classes.buttonShape}
-            >
-              {">"}
-            </Button>
-          </div>
+    <div className={classes.carouselContainer}>
+      <div className={classes.carouselNavContainer}>
+        <div className={classes.carouselNav}>
+          <FeaturedNav />
         </div>
+        <div className={classes.carouselButtons}>
+          <Button
+            onClick={() => carousel.slidePrev()}
+            variant="contained"
+            className={classes.buttonShape}
+          >
+            {"<"}
+          </Button>
+          <Button
+            onClick={() => carousel.slideNext()}
+            variant="contained"
+            className={classes.buttonShape}
+          >
+            {">"}
+          </Button>
+        </div>
+      </div>
 
-        <Carousel
-          ref={(ref) => (carousel = ref)}
-          breakPoints={breakPoints}
-          pagination={false}
-          showArrows={false}
-          itemPadding={[10, 10]}
-        >
-          {itemData.map((item) => (
-            <>
-              <div
-                className={classes.cardDiv}
-                style={{ backgroundImage: `url(${item.img})` }}
-              >
-                <div className={classes.cardInner}>
-                  <div>
-                    <div className={classes.cardTextInner}>
-                      <Box>
-                        <Typography
-                          variant="h6"
-                          component="h6"
-                          className={classes.typographyCustom}
-                        >
-                          {item.title}
-                        </Typography>
-                      </Box>
-                      <Box className={classes.favIcon}>
-                        <IconButton aria-label={`star ${item.title}`}>
-                          <FavoriteBorderIcon style={{ fill: "#fff" }} />
-                        </IconButton>
-                      </Box>
-                    </div>
-
+      <Carousel
+        ref={(ref) => (carousel = ref)}
+        breakPoints={breakPoints}
+        pagination={false}
+        showArrows={false}
+        itemPadding={[10, 10]}
+      >
+        {itemData.map((item, index) => (
+          <div
+            key={index}
+            className={classes.cardDiv}
+            style={{ backgroundImage: `url(${item.img})` }}
+          >
+            <div className={classes.cardInner}>
+              <div>
+                <div className={classes.cardTextInner}>
+                  <Box>
                     <Typography
                       variant="h6"
                       component="h6"
                       className={classes.typographyCustom}
                     >
-                      US ${item.price}
+                      {item.title}
                     </Typography>
+                  </Box>
+                  <Box className={classes.favIcon}>
+                    <IconButton aria-label={`star ${item.title}`}>
+                      <FavoriteBorderIcon style={{ fill: "#fff" }} />
+                    </IconButton>
+                  </Box>
+                </div>
 
-                    <div className={classes.ratingBlock}>
-                      <StarIcon className={classes.starIcon} />
-                      <Typography
-                        variant="h6"
-                        component="h6"
-                        className={classes.typographyCustom}
-                      >
-                        {item.rating}
-                      </Typography>
-                    </div>
-                  </div>
+                <Typography
+                  variant="h6"
+                  component="h6"
+                  className={classes.typographyCustom}
+                >
+                  US ${item.price}
+                </Typography>
 
-                  <div className={classes.locationBlock}>
-                    <LocationOnOutlinedIcon className={classes.locationIcon} />
-                    <Typography
-                      variant="p"
-                      component="p"
-                      className={classes.typographyLocation}
-                    >
-                      {item.location}
-                    </Typography>
-                  </div>
+                <div className={classes.ratingBlock}>
+                  <StarIcon className={classes.starIcon} />
+                  <Typography
+                    variant="h6"
+                    component="h6"
+                    className={classes.typographyCustom}
+                  >
+                    {item.rating}
+                  </Typography>
                 </div>
               </div>
-            </>
-          ))}
-        </Carousel>
-        <Paper className={classes.navPaper}>
-          <Tabs
-            indicatorColor="primary"
-            textColor="primary"
-            aria-label="disabled tabs example"
-          >
-            <Link to="/listing">
-              <Tab
-                className={(classes.navItem, classes.showMore)}
-                label="Show More"
-              />
-            </Link>
-          </Tabs>
-        </Paper>
-      </div>
-    </>
+
+              <div className={classes.locationBlock}>
+                <LocationOnOutlinedIcon className={classes.locationIcon} />
+                <Typography
+                  component="p"
+                  className={classes.typographyLocation}
+                >
+                  {item.location}
+                </Typography>
+              </div>
+            </div>
+          </div>
+        ))}
+      </Carousel>
+      <Paper className={classes.navPaper}>
+        <Link to={URL_PATHS.PROPERTIES_LIST}>
+          <Button className={(classes.navItem, classes.showMore)}>
+            Show More
+          </Button>
+        </Link>
+      </Paper>
+    </div>
   );
 }

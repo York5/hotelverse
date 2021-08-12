@@ -5,12 +5,14 @@ defmodule Hotelverse.Repo.Migrations.CreateProperties do
     create table(:properties, primary_key: false) do
       add :id, :uuid, primary_key: true
       add :title, :string
+      add :max_adults, :integer, default: 1
+      add :max_kids, :integer, default: 0
       add :price, :float
-      add :max_adults, :integer
-      add :max_kids, :integer
       add :rating, :float
       add :location, :string
-      add :description, :string
+      add :features, {:array, :uuid}, default: []
+      add :description, :text
+      add :images, {:array, :string}, default: []
 
       timestamps()
     end

@@ -76,7 +76,6 @@ export const useAuth = () => {
 
 const AuthContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
-  const history = useHistory();
 
   async function signUp(userForm) {
     const user = {
@@ -154,6 +153,15 @@ const AuthContextProvider = ({ children }) => {
     }
   }
 
+  function attachAuth(opts) {
+    return {
+      ...opts,
+      headers: {
+        Authorization: state.user.access_token,
+      },
+    };
+  }
+
   const values = {
     user: state.user,
     messageType: state.messageType,
@@ -162,6 +170,7 @@ const AuthContextProvider = ({ children }) => {
     signIn,
     signOut,
     checkAuth,
+    attachAuth,
   };
 
   return <authContext.Provider value={values}>{children}</authContext.Provider>;

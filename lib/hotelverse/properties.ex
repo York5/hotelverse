@@ -19,6 +19,18 @@ defmodule Hotelverse.Properties do
   """
   def list_properties do
     Repo.all(Property)
+    |> Enum.map(fn property ->
+
+      selected_features = Enum.map(property.features, fn f_id ->
+        feature = Hotelverse.Content.get_feature!(f_id)
+        %{
+          id: feature.id,
+          name: feature.name,
+          icon: feature.icon
+        }
+      end)
+      Map.put(property, :features, selected_features)
+    end)
   end
 
   @doc """
@@ -35,7 +47,18 @@ defmodule Hotelverse.Properties do
       ** (Ecto.NoResultsError)
 
   """
-  def get_property!(id), do: Repo.get!(Property, id)
+  def get_property!(id) do
+    property = Repo.get!(Property, id)
+    selected_features = Enum.map(property.features, fn f_id ->
+      feature = Hotelverse.Content.get_feature!(f_id)
+      %{
+        id: feature.id,
+        name: feature.name,
+        icon: feature.icon
+      }
+    end)
+    Map.put(property, :features, selected_features)
+  end
 
   @doc """
   Creates a property.

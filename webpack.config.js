@@ -5,7 +5,7 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const TerserPlugin = require("terser-webpack-plugin");
 const OptimizeCSSAssetsPlugin = require("optimize-css-assets-webpack-plugin");
 const CopyWebpackPlugin = require("copy-webpack-plugin");
-
+require("babel-polyfill");
 module.exports = (env, options) => {
   const devMode = options.mode !== "production";
 
@@ -16,9 +16,10 @@ module.exports = (env, options) => {
         new OptimizeCSSAssetsPlugin({}),
       ],
     },
-    entry: {
-      app: "./assets/js/app.js",
-    },
+    // entry: {
+    //   app: "./assets/js/app.js",
+    // },
+    entry: ["babel-polyfill", "./assets/js/app.js"],
     output: {
       filename: "app.js",
       path: path.resolve(__dirname, "priv/static/js"),

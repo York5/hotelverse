@@ -17,8 +17,8 @@ import { Avatar, Button, Grid } from "@material-ui/core";
 import Searchbar from "./Searchbar";
 import { Link, useHistory } from "react-router-dom";
 import axios from "axios";
-import { URL_PATHS } from "../helpers/consts";
-import { useAuth } from "../contexts/AuthContext";
+import { URL_PATHS } from "./../../helpers/consts";
+import { useAuth } from "./../../contexts/AuthContext";
 
 const drawerWidth = 100;
 
@@ -216,7 +216,10 @@ const Header = () => {
           {renderMiniSearchBar()}
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <Link to="/add" style={{ textDecoration: "none" }}>
+            <Link
+              to={URL_PATHS.PROPERTIES_CREATE}
+              style={{ textDecoration: "none" }}
+            >
               <Button
                 variant="contained"
                 color="secondary"
@@ -229,7 +232,7 @@ const Header = () => {
               <>
                 <Link to={URL_PATHS.SIGN_IN} style={{ textDecoration: "none" }}>
                   <Button
-                    variant="link"
+                    variant="outlined"
                     color="secondary"
                     // className={classes.addButton}
                   >
@@ -250,16 +253,15 @@ const Header = () => {
 
             {user && (
               <>
-                <Link style={{ textDecoration: "none" }}>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    onClick={signOut}
-                    // className={classes.addButton}
-                  >
-                    Sign out
-                  </Button>
-                </Link>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="small"
+                  onClick={signOut}
+                  // className={classes.addButton}
+                >
+                  Sign out
+                </Button>
                 <IconButton
                   edge="end"
                   aria-label="account of current user"

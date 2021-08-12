@@ -15,7 +15,7 @@ import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import StarIcon from "@material-ui/icons/Star";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import { Link } from "react-router-dom";
-import { URL_PATHS } from "../helpers/consts";
+import { URL_PATHS } from "./../../helpers/consts";
 
 const useStyles = makeStyles((theme) => {
   return {

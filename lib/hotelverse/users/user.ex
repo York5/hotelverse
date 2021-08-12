@@ -8,6 +8,7 @@ defmodule Hotelverse.Users.User do
 
     field :first_name, :string, null: false
     field :last_name, :string, null: false
+    has_many :properties, Hotelverse.Properties.Property
 
     timestamps()
   end
@@ -18,6 +19,36 @@ defmodule Hotelverse.Users.User do
     |> Ecto.Changeset.cast(attrs, [:role, :first_name, :last_name])
     |> Ecto.Changeset.validate_required([:role, :first_name, :last_name])
   end
+
+  # alias Plug.Conn
+  # use Pow.Ecto.Context,
+  #   repo: Hotelverse.Repo,
+  #   user: Hotelverse.Users.User
+
+
+  def init_db do
+    case Hotelverse.Users.list_users do
+      [] ->
+        do_init_db()
+      _ ->
+        false;
+    end
+  end
+  defp do_init_db() do
+    data = [
+      %{"email" => "bado@email.com", "password" => "12345678", "password_confirmation" => "12345678", "first_name" => "B", "last_name" => "K", "role" => "guest"},
+      %{"email" => "mike@email.com", "password" => "12345678", "password_confirmation" => "12345678", "first_name" => "M", "last_name" => "V", "role" => "guest"},
+      %{"email" => "umid@email.com", "password" => "12345678", "password_confirmation" => "12345678", "first_name" => "U", "last_name" => "K", "role" => "guest"}
+    ]
+
+    Enum.map(data, fn user ->
+      IO.inspect(Hotelverse.Users.create(user))
+      # Pow.Ecto.Context.create(user)
+      # pow_create
+      # Pow.Plug.create_user(%{private: %{}}, user)
+    end)
+  end
+
 end
 
 # defmodule Hotelverse.Users.User do

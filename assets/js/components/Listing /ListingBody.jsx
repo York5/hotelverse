@@ -16,8 +16,8 @@ import StarIcon from "@material-ui/icons/Star";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import ListingMap from "../GoogleMap/GoogleMap";
 import { Link } from "react-router-dom";
-import { useProperties } from "../contexts/PropertyContext";
-import { URL_PATHS } from "../helpers/consts";
+import { useProperties } from "./../../contexts/PropertyContext";
+import { URL_PATHS } from "./../../helpers/consts";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -207,7 +207,7 @@ export default function ListingBody() {
               <div
                 className={classes.cardDiv}
                 style={{
-                  backgroundImage: `url(https://maxcdn.icons8.com/app/uploads/2019/06/digital-illustration-brian-edward-miller-7.jpg)`,
+                  backgroundImage: `url(${item.images[0]})`,
                 }}
               >
                 <Box className={classes.favIcon}>

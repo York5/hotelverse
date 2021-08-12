@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Button from "@material-ui/core/Button";
 import Snackbar from "@material-ui/core/Snackbar";
 import Slide from "@material-ui/core/Slide";
-import { useAuth } from "../contexts/AuthContext";
+import { useAuth } from "./../../contexts/AuthContext";
 import { useEffect } from "react";
 import { Alert } from "@material-ui/lab";
 
@@ -40,7 +40,7 @@ const NotificationsBar = () => {
       {message && (
         <Snackbar
           open={open}
-          autoHideDuration={6000}
+          autoHideDuration={3000}
           anchorOrigin={{ vertical: "bottom", horizontal: "right" }}
           onClose={handleClose}
           TransitionComponent={transition}

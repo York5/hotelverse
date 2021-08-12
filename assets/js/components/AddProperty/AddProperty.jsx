@@ -1,7 +1,7 @@
 import React from "react";
 import PropertyForm from "../Forms/PropertyForm";
-import { useProperties } from "../contexts/PropertyContext";
-import { URL_PATHS } from "../helpers/consts";
+import { useProperties } from "./../../contexts/PropertyContext";
+import { URL_PATHS } from "./../../helpers/consts";
 import { useEffect } from "react";
 
 const AddProperty = () => {

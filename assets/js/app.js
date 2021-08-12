@@ -18,7 +18,7 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import Routes from "./Routes/Routes";
-import AuthContextProvider from "./components/contexts/AuthContext";
+import AuthContextProvider from "./contexts/AuthContext";
 
 const theme = createTheme({
   palette: {

@@ -10,8 +10,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Controller, useForm } from "react-hook-form";
-import { useAuth } from "../contexts/AuthContext";
-import { URL_PATHS } from "../helpers/consts";
+import { useAuth } from "./../../contexts/AuthContext";
+import { URL_PATHS } from "./../../helpers/consts";
 
 const useStyles = makeStyles((theme) => ({
   paper: {

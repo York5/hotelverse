@@ -18,6 +18,15 @@ defmodule Hotelverse.Content.Feature do
   end
 
   def init_db do
+    case Hotelverse.Content.list_features do
+      [] ->
+        do_init_db()
+      _ ->
+        false;
+    end
+  end
+
+  def do_init_db do
     data = [
       %{
         title: "Wi-Fi",

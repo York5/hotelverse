@@ -28,6 +28,7 @@ defmodule HotelverseWeb.PropertyController do
   end
 
   def update(conn, %{"id" => id, "property" => property_params}) do
+    IO.inspect(conn, property_params)
     property = Properties.get_property!(id)
 
     with {:ok, %Property{} = property} <- Properties.update_property(property, property_params) do

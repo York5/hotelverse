@@ -21,7 +21,8 @@ config :hotelverse, HotelverseWeb.Endpoint,
 
 config :hotelverse, :pow,
   user: Hotelverse.Users.User,
-  repo: Hotelverse.Repo
+  repo: Hotelverse.Repo,
+  users_context: Hotelverse.Users
 
 # Configures Elixir's Logger
 config :logger, :console,

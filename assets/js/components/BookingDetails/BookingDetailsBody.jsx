@@ -11,7 +11,8 @@ import { Button, Typography } from "@material-ui/core";
 import BookingDetailsFeatures from "./BookingDetailsFeatures";
 import BookingForm from "./BookingForm/BookingForm";
 import { Link, useParams } from "react-router-dom";
-import { useProperties } from "../contexts/PropertyContext";
+import { useProperties } from "./../../contexts/PropertyContext";
+import { URL_PATHS } from "./../../helpers/consts";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -156,7 +157,10 @@ export default function BookingDetailsBody() {
 
         <div className={classes.chipsBlock}>
           <DetailChips rating={propertyDetails.rating} />
-          <Link to={`/edit/${id}`} style={{ textDecoration: "none" }}>
+          <Link
+            to={`${URL_PATHS.PROPERTIES_EDIT}/${id}`}
+            style={{ textDecoration: "none" }}
+          >
             <Button
               variant="contained"
               color="secondary"

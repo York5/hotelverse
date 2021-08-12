@@ -133,6 +133,10 @@ defmodule Hotelverse.Content do
   """
   def get_feature!(id), do: Repo.get!(Feature, id)
 
+  def get_feature_by_title(title) do
+    Repo.one(from f in Feature, where: f.name == ^title)
+  end
+
   @doc """
   Creates a feature.
 

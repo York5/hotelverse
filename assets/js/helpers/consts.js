@@ -16,6 +16,7 @@ export const URL_PATHS = {
   SIGN_UP: "/signup",
   PROPERTIES_LIST: "/properties",
   PROPERTIES_CREATE: "/properties/new",
+  PROPERTIES_EDIT: "/properties/edit",
   PROPERTIES_DETAILS: "/properties/details",
 };
 

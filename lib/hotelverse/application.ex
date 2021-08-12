@@ -23,7 +23,7 @@ defmodule Hotelverse.Application do
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Hotelverse.Supervisor]
     resp = Supervisor.start_link(children, opts)
-    # Hotelverse.init_db()
+    Hotelverse.init_db()
     resp
   end
 

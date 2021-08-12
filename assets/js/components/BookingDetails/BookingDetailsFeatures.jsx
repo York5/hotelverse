@@ -28,44 +28,20 @@ const useStyles = makeStyles({
   },
 });
 
-const BookingDetailsFeatures = () => {
+const BookingDetailsFeatures = ({ features }) => {
   const classes = useStyles();
   return (
     <div className={classes.featuresContainer}>
-      <Typography variant="p" component="p" className={classes.featuresTitle}>
+      <Typography component="p" className={classes.featuresTitle}>
         Property Features
       </Typography>
       <div className={classes.featuresIconGroup}>
-        <div className={classes.featuresItem}>
-          <Icon>
-            <WifiOutlinedIcon />
-          </Icon>
-          <div className={classes.iconText}>Wi-Fi</div>
-        </div>
-        <div className={classes.featuresItem}>
-          <Icon>
-            <KingBedOutlinedIcon />
-          </Icon>
-          <div className={classes.iconText}>Kings Bed</div>
-        </div>
-        <div className={classes.featuresItem}>
-          <Icon>
-            <BathtubOutlinedIcon />
-          </Icon>
-          <div className={classes.iconText}>Bathtub</div>
-        </div>
-        <div className={classes.featuresItem}>
-          <Icon>
-            <RestaurantOutlinedIcon />
-          </Icon>
-          <div className={classes.iconText}>Breakfast</div>
-        </div>
-        <div className={classes.featuresItem}>
-          <Icon>
-            <ZoomOutMapOutlinedIcon />
-          </Icon>
-          <div className={classes.iconText}>4m x 6m</div>
-        </div>
+        {features.map((feat) => (
+          <div key={feat.id} className={classes.featuresItem}>
+            <Icon>{feat.icon}</Icon>
+            <div className={classes.iconText}>{feat.name}</div>
+          </div>
+        ))}
       </div>
     </div>
   );

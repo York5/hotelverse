@@ -20,7 +20,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function DetailChips() {
+export default function DetailChips({ rating }) {
   const classes = useStyles();
 
   const handleDelete = () => {
@@ -46,7 +46,7 @@ export default function DetailChips() {
       <Chip label="Hot value" clickable color="primary" variant="outlined" />
       <Box component="fieldset" mb={3} borderColor="transparent">
         <Typography component="legend"></Typography>
-        <Rating name="read-only" value={4} readOnly />
+        <Rating name="read-only" value={rating} readOnly />
       </Box>
     </div>
   );

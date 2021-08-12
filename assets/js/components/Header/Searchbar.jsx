@@ -71,10 +71,11 @@ const Searchbar = () => {
   }
 
   const searchProps = {
+    name: "searchString",
     placeholder: "Where are you going?",
     width: 200,
     height: commonHeight,
-    isMulti: true,
+    isMulti: false,
     options: tempData,
     prefix: <LocationOnOutlinedIcon className={classes.searchIcon} />,
     hideDropdown: true,
@@ -82,6 +83,7 @@ const Searchbar = () => {
   };
 
   const adultsSelectProps = {
+    name: "adultsCount",
     placeholder: "Adults",
     width: 100,
     height: commonHeight,
@@ -89,6 +91,7 @@ const Searchbar = () => {
   };
 
   const childrenSelectProps = {
+    name: "childrenCount",
     placeholder: "Kids",
     width: 90,
     height: commonHeight,

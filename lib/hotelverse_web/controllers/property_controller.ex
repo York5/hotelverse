@@ -12,6 +12,8 @@ defmodule HotelverseWeb.PropertyController do
   end
 
   def create(conn, %{"property" => property_params}) do
+    selected_features = Enum.map(property_params["features"], fn feature -> feature["value"] end)
+    property_params = Map.put(property_params, "features", selected_features)
     with {:ok, %Property{} = property} <- Properties.create_property(property_params) do
       conn
       |> put_status(:created)
@@ -26,6 +28,7 @@ defmodule HotelverseWeb.PropertyController do
   end
 
   def update(conn, %{"id" => id, "property" => property_params}) do
+    IO.inspect(conn, property_params)
     property = Properties.get_property!(id)
 
     with {:ok, %Property{} = property} <- Properties.update_property(property, property_params) do

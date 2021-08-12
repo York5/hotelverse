@@ -9,16 +9,17 @@ import {
   Tabs,
   Typography,
 } from "@material-ui/core";
-import React from "react";
+import React, { useEffect } from "react";
 import Carousel from "react-elastic-carousel";
 import FavoriteBorderIcon from "@material-ui/icons/FavoriteBorder";
 import StarIcon from "@material-ui/icons/Star";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import ListingMap from "../GoogleMap/GoogleMap";
 import { Link } from "react-router-dom";
+import { useProperties } from "./../../contexts/PropertyContext";
+import { URL_PATHS } from "./../../helpers/consts";
 
 const useStyles = makeStyles((theme) => {
-  console.log(theme.palette);
   return {
     cardDiv: {
       height: 200,
@@ -100,6 +101,8 @@ const itemData = [
     price: 1000,
     rating: 5,
     location: "USA",
+    description:
+      "Unwind at this stunning French Provencal beachside cottage. The house was lovingly built with stone floors, high-beamed ceilings, and antique details for a luxurious yet charming feel. Enjoy the sea and mountain views from the pool and lush garden. The house is located in the enclave of Llandudno Beach, a locals-only spot with unspoilt, fine white sand and curling surfing waves. Although shops and restaurants are only a five-minute drive away, the area feels peaceful and secluded.",
   },
   {
     img: "https://maxcdn.icons8.com/app/uploads/2019/06/digital-illustration-brian-edward-miller-7.jpg",
@@ -185,19 +188,27 @@ const itemData = [
 
 export default function ListingBody() {
   const classes = useStyles();
+  const { getPropertiesData, propertiesData } = useProperties();
+
+  useEffect(() => {
+    getPropertiesData();
+  }, []);
+
   return (
     <div className={classes.listingContainer}>
       <Container className={classes.cardsContainer}>
-        {itemData.map((item) => (
+        {propertiesData.map((item) => (
           <Link
             key={item.id}
-            to={`/details/:${item.id}`}
+            to={`${URL_PATHS.PROPERTIES_DETAILS}/${item.id}`}
             style={{ color: "black", textDecoration: "none" }}
           >
             <div className={classes.cardContainer}>
               <div
                 className={classes.cardDiv}
-                style={{ backgroundImage: `url(${item.img})` }}
+                style={{
+                  backgroundImage: `url(${item.images[0]})`,
+                }}
               >
                 <Box className={classes.favIcon}>
                   <IconButton aria-label={`star ${item.title}`}>
@@ -225,7 +236,6 @@ export default function ListingBody() {
                 <div className={classes.locationBlock}>
                   <LocationOnOutlinedIcon className={classes.locationIcon} />
                   <Typography
-                    variant="p"
                     component="p"
                     className={classes.typographyLocation}
                   >

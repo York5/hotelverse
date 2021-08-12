@@ -11,11 +11,18 @@ defmodule HotelverseWeb.PropertyView do
   end
 
   def render("property.json", %{property: property}) do
-    %{id: property.id,
+    %{
+      id: property.id,
+      user_id: property.user_id,
       title: property.title,
+      max_adults: property.max_adults,
+      max_kids: property.max_kids,
       price: property.price,
       rating: property.rating,
       location: property.location,
-      description: property.description}
+      features: property.features,
+      description: property.description,
+      images: property.images
+    }
   end
 end

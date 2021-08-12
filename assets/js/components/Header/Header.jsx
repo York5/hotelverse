@@ -13,9 +13,12 @@ import SearchIcon from "@material-ui/icons/Search";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import MailIcon from "@material-ui/icons/Mail";
 import MoreIcon from "@material-ui/icons/MoreVert";
-import { Avatar, Grid } from "@material-ui/core";
+import { Avatar, Button, Grid } from "@material-ui/core";
 import Searchbar from "./Searchbar";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
+import { URL_PATHS } from "./../../helpers/consts";
+import { useAuth } from "./../../contexts/AuthContext";
 
 const drawerWidth = 100;
 
@@ -97,6 +100,10 @@ const useStyles = makeStyles((theme) => {
         display: "none",
       },
     },
+    addButton: {
+      margin: 10,
+      maxHeight: 50,
+    },
   };
 });
 
@@ -105,7 +112,7 @@ const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const history = useHistory();
-  console.log(history);
+  const { user, signOut } = useAuth();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -209,16 +216,75 @@ const Header = () => {
           {renderMiniSearchBar()}
           <div className={classes.grow} />
           <div className={classes.sectionDesktop}>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
+            <Link
+              to={URL_PATHS.PROPERTIES_CREATE}
+              style={{ textDecoration: "none" }}
             >
-              <Avatar src="images/avatar.jpg">UK</Avatar>
-            </IconButton>
+              <Button
+                variant="contained"
+                color="secondary"
+                // className={classes.addButton}
+              >
+                Become a Host
+              </Button>
+            </Link>
+            {!user && (
+              <>
+                <Link to={URL_PATHS.SIGN_IN} style={{ textDecoration: "none" }}>
+                  <Button
+                    variant="outlined"
+                    color="secondary"
+                    // className={classes.addButton}
+                  >
+                    Sign in
+                  </Button>
+                </Link>
+                <Link to={URL_PATHS.SIGN_UP} style={{ textDecoration: "none" }}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    // className={classes.addButton}
+                  >
+                    Sign up
+                  </Button>
+                </Link>
+              </>
+            )}
+
+            {user && (
+              <>
+                <Button
+                  variant="contained"
+                  color="secondary"
+                  size="small"
+                  onClick={signOut}
+                  // className={classes.addButton}
+                >
+                  Sign out
+                </Button>
+                <IconButton
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <Avatar src="/images/avatar.jpg">UK</Avatar>
+                </IconButton>
+              </>
+            )}
+
+            {/* <Link to="/registration/new" style={{ textDecoration: "none" }}>
+            <Button
+              onClick={handle_logout}
+              variant="contained"
+              color="secondary"
+              className={classes.addButton}
+            >
+              Logout
+            </Button>
+            </Link> */}
           </div>
           <div className={classes.sectionMobile}>
             <IconButton
@@ -233,7 +299,11 @@ const Header = () => {
           </div>
         </Toolbar>
         <Grid style={{ backgroundColor: "#E1EEF7" }}>
-          <img style={{ width: "100%" }} src="images/banner.png" alt="Banner" />
+          <img
+            style={{ width: "100%" }}
+            src="/images/mountainBanner.jpg"
+            alt="Banner"
+          />
         </Grid>
         {history.location.pathname === "/" ? <Searchbar /> : null}
       </AppBar>

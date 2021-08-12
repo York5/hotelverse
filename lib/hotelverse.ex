@@ -13,4 +13,10 @@ defmodule Hotelverse do
 
   # mix phx.gen.json Bookings Booking bookings user_id:integer property_id:integer checkin:date checkout:date adults:integer kids:integer
 
+  def init_db do
+    Hotelverse.Users.User.init_db()
+    Hotelverse.Content.Feature.init_db()
+    Hotelverse.Properties.Property.init_db()
+  end
+
 end

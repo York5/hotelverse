@@ -11,8 +11,10 @@ defmodule HotelverseWeb.FeatureView do
   end
 
   def render("feature.json", %{feature: feature}) do
-    %{id: feature.id,
-      property_id: feature.property_id,
-      name: feature.name}
+    %{
+      id: feature.id,
+      name: feature.name,
+      icon: feature.icon
+    }
   end
 end

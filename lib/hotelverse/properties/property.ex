@@ -1,13 +1,15 @@
 defmodule Hotelverse.Properties.Property do
-  use Ecto.Schema
+  use Hotelverse.Schema
   import Ecto.Changeset
 
   schema "properties" do
-    field :description, :string
-    field :location, :string
-    field :price, :float
-    field :rating, :float, default: 0.0
     field :title, :string
+    field :price, :float
+    field :max_adults, :integer
+    field :max_kids, :integer
+    field :rating, :float, default: 0.0
+    field :location, :string
+    field :description, :string
 
     timestamps()
   end

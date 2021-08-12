@@ -1,10 +1,12 @@
 defmodule Hotelverse.Content.Feature do
-  use Ecto.Schema
+  use Hotelverse.Schema
   import Ecto.Changeset
 
   schema "features" do
     field :name, :string
     field :property_id, :integer
+    field :icon, :string
+
 
     timestamps()
   end
@@ -12,7 +14,7 @@ defmodule Hotelverse.Content.Feature do
   @doc false
   def changeset(feature, attrs) do
     feature
-    |> cast(attrs, [:property_id, :name])
-    |> validate_required([:property_id, :name])
+    |> cast(attrs, [:property_id, :name, :icon])
+    |> validate_required([:property_id, :name, :icon])
   end
 end

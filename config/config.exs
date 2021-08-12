@@ -8,7 +8,8 @@
 use Mix.Config
 
 config :hotelverse,
-  ecto_repos: [Hotelverse.Repo]
+  ecto_repos: [Hotelverse.Repo],
+  migration_primary_key: [name: :id, type: :binary_id]
 
 # Configures the endpoint
 config :hotelverse, HotelverseWeb.Endpoint,

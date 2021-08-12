@@ -1,10 +1,11 @@
 defmodule Hotelverse.Content.Image do
-  use Ecto.Schema
+  use Hotelverse.Schema
   import Ecto.Changeset
 
   schema "images" do
     field :property_id, :integer
     field :url, :string
+    field :seq, :integer
 
     timestamps()
   end

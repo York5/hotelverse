@@ -28,7 +28,16 @@ defmodule HotelverseWeb.Router do
     post "/session/renew", SessionController, :renew
   end
 
-  scope "/api/v1", HotelverseWeb.API.V1, as: :api_v1 do
+  scope "/api/v1", HotelverseWeb do
+    pipe_through :api
+
+    resources "/properties", PropertyController, only: [:index, :show]
+    # resources "/images", ImageController, only: [:index, :show]
+    # resources "/extras", ExtraController, only: [:index, :show]
+    resources "/features", FeatureController, only: [:index]
+  end
+
+  scope "/api/v1", HotelverseWeb, as: :api_v1 do
     pipe_through [:api, :api_protected]
 
     resources "/properties", PropertyController
@@ -38,14 +47,7 @@ defmodule HotelverseWeb.Router do
     resources "/bookings", BookingController
   end
 
-  scope "/api/v1", HotelverseWeb.API.V1, as: :api_v1 do
-    pipe_through :api
 
-    resources "/properties", PropertyController, except: [:new, :edit]
-    resources "/images", ImageController, except: [:new, :edit]
-    resources "/extras", ExtraController, except: [:new, :edit]
-    resources "/features", FeatureController, except: [:new, :edit]
-  end
 
 
   # scope "/" do

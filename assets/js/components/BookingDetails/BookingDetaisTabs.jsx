@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 });
 
 export default function BookingDetailsTabs() {
-  const [value, setValue] = React.useState(2);
+  const [value, setValue] = React.useState(0);
   const classes = useStyles();
 
   const handleChange = (event, newValue) => {
@@ -31,7 +31,6 @@ export default function BookingDetailsTabs() {
         indicatorColor="primary"
         textColor="primary"
         onChange={handleChange}
-        aria-label="disabled tabs example"
       >
         <Tab className={classes.navItem} label="Description" />
         <Tab className={classes.navItem} label="Features" />

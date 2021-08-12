@@ -1,34 +1,37 @@
-import React, { useState } from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import React from "react";
 import PropertyForm from "../Forms/PropertyForm";
 import { useProperties } from "../contexts/PropertyContext";
-
-const useStyles = makeStyles({});
+import { URL_PATHS } from "../helpers/consts";
+import { useEffect } from "react";
 
 const AddProperty = () => {
-  const classes = useStyles();
-  const { addProperty, history } = useProperties();
+  const { getFeatures, featuresData, addProperty, history } = useProperties();
 
-  const onSubmit = (property) => {
-    console.log(property);
-    const data = addProperty(property);
-    history.push("/");
+  useEffect(() => {
+    getFeatures();
+  }, []);
+
+  const options = featuresData.map((feature) => ({
+    value: feature.id,
+    label: feature.name,
+    icon: feature.icon,
+  }));
+
+  const onSubmit = async (property) => {
+    property = normalizeImgURLs(property);
+    const newProperty = await addProperty(property);
+    history.push(`${URL_PATHS.PROPERTIES_DETAILS}/${newProperty.id}`);
   };
 
-  // const handleInp = (e) => {
-  //   console.log(property);
-  //   let obj = {
-  //     ...property,
-  //     [e.target.name]: e.target.value,
-  //   };
-  //   setProperty(obj);
-  // };
+  function normalizeImgURLs(property) {
+    property.images = property.imageURLs.split(";");
+    return property;
+  }
 
   return (
     <PropertyForm
+      options={options}
       formTitle={"Add New Property"}
-      // property={property}
-      // handleInp={handleInp}
       onSubmit={onSubmit}
     />
   );

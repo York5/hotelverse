@@ -17,9 +17,9 @@ import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import ListingMap from "../GoogleMap/GoogleMap";
 import { Link } from "react-router-dom";
 import { useProperties } from "../contexts/PropertyContext";
+import { URL_PATHS } from "../helpers/consts";
 
 const useStyles = makeStyles((theme) => {
-  console.log(theme.palette);
   return {
     cardDiv: {
       height: 200,
@@ -194,15 +194,13 @@ export default function ListingBody() {
     getPropertiesData();
   }, []);
 
-  useEffect(() => {}, [propertiesData]);
-
   return (
     <div className={classes.listingContainer}>
       <Container className={classes.cardsContainer}>
         {propertiesData.map((item) => (
           <Link
             key={item.id}
-            to={`/details/${item.id}`}
+            to={`${URL_PATHS.PROPERTIES_DETAILS}/${item.id}`}
             style={{ color: "black", textDecoration: "none" }}
           >
             <div className={classes.cardContainer}>
@@ -238,7 +236,6 @@ export default function ListingBody() {
                 <div className={classes.locationBlock}>
                   <LocationOnOutlinedIcon className={classes.locationIcon} />
                   <Typography
-                    variant="p"
                     component="p"
                     className={classes.typographyLocation}
                   >

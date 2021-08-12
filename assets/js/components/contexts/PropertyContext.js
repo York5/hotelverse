@@ -1,7 +1,8 @@
 import axios from "axios";
 import React, { createContext, useContext, useReducer } from "react";
 import { useHistory } from "react-router";
-import { ACTIONS, JSON_API_PROPERTIES } from "../helpers/consts";
+import { ACTIONS, API_FEATURES, API_PROPERTIES } from "../helpers/consts";
+import { useAuth } from "./AuthContext";
 
 export const propertyContext = createContext();
 
@@ -12,10 +13,13 @@ export const useProperties = () => {
 const INIT_STATE = {
   propertiesData: [],
   propertyDetails: {},
+  features: [],
 };
 
 const reducer = (state = INIT_STATE, action) => {
   switch (action.type) {
+    case ACTIONS.GET_FEATURES:
+      return { ...state, features: action.payload };
     case ACTIONS.GET_PROPERTIES:
       return { ...state, propertiesData: action.payload };
     case ACTIONS.GET_PROPERTY_DETAILS:
@@ -28,41 +32,51 @@ const reducer = (state = INIT_STATE, action) => {
 const PropertyContextProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, INIT_STATE);
   const history = useHistory();
+  const { attachAuth } = useAuth();
 
-  console.log(state.propertiesData);
+  async function getFeatures() {
+    const opts = attachAuth({});
+    const { data } = await axios.get(API_FEATURES, {}, opts);
+    console.log(data);
 
-  const getPropertiesData = () => {
-    const data = axios(JSON_API_PROPERTIES).then(function (response) {
-      console.log(response.data);
-      dispatch({
-        type: ACTIONS.GET_PROPERTIES,
-        payload: response.data.data,
-      });
+    dispatch({
+      type: ACTIONS.GET_FEATURES,
+      payload: data.data,
     });
-  };
+  }
 
-  const getPropertyDetails = (id) => {
-    const data = axios(`${JSON_API_PROPERTIES}/${id}`).then(function (
-      response
-    ) {
-      console.log(response.data);
-      dispatch({
-        type: ACTIONS.GET_PROPERTY_DETAILS,
-        payload: response.data.data,
-      });
+  async function getPropertiesData() {
+    const { data } = await axios(API_PROPERTIES);
+
+    dispatch({
+      type: ACTIONS.GET_PROPERTIES,
+      payload: data.data,
     });
-  };
+  }
 
-  const addProperty = (property) => {
+  async function getPropertyDetails(id) {
+    const { data } = await axios(`${API_PROPERTIES}/${id}`);
+    dispatch({
+      type: ACTIONS.GET_PROPERTY_DETAILS,
+      payload: data.data,
+    });
+  }
+
+  async function addProperty(property) {
     console.log(property);
-    const data = axios.post(JSON_API_PROPERTIES, { property: property });
-    console.log("data 0000here", data);
-    data.then((hh) => console.log(hh, "HAHAHAHAHAHAHAH"));
-    getPropertiesData();
-  };
+    const opts = attachAuth({});
+    const { data } = await axios.post(
+      API_PROPERTIES,
+      { property: property },
+      opts
+    );
+    return data.data;
+  }
 
   const values = {
     history,
+    featuresData: state.features,
+    getFeatures,
     propertiesData: state.propertiesData,
     propertyDetails: state.propertyDetails,
     getPropertiesData,

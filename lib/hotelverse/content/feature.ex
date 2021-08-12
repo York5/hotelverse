@@ -7,14 +7,86 @@ defmodule Hotelverse.Content.Feature do
     field :property_id, :integer
     field :icon, :string
 
-
     timestamps()
   end
 
   @doc false
   def changeset(feature, attrs) do
     feature
-    |> cast(attrs, [:property_id, :name, :icon])
-    |> validate_required([:property_id, :name, :icon])
+    |> cast(attrs, [:name, :icon])
+    |> validate_required([:name, :icon])
+  end
+
+  def init_db do
+    data = [
+      %{
+        title: "Wi-Fi",
+        icon: "wifi_outlined"
+      },
+      %{
+        title: "Bathtub",
+        icon: "bathtub"
+      },
+      %{
+        title: "Standard Bed",
+        icon: "hotel"
+      },
+      %{
+        title: "Breakfast",
+        icon: "restaurant"
+      },
+      %{
+        title: "Kings Bed",
+        icon: "bed"
+      },
+      %{
+        title: "Big Room",
+        icon: "zoom_out_map"
+      },
+      %{
+        title: "Bar",
+        icon: "local_bar"
+      },
+      %{
+        title: "Swimming Pool",
+        icon: "pool"
+      },
+      %{
+        title: "Refrigirator",
+        icon: "kitchen"
+      },
+      %{
+        title: "AC",
+        icon: "ac_unit"
+      },
+      %{
+        title: "Iron Board",
+        icon: "iron"
+      },
+      %{
+        title: "Gym",
+        icon: "fitness_center"
+      },
+      %{
+        title: "Pets Allowed",
+        icon: "pets"
+      },
+      %{
+        title: "Free Parking",
+        icon: "local_parking"
+      },
+      %{
+        title: "Mountain View",
+        icon: "landscape"
+      }
+    ]
+
+    Enum.each(data, fn feature ->
+      feature_params = %{
+        "name" => feature.title,
+        "icon" => feature.icon
+      }
+      Hotelverse.Content.create_feature(feature_params)
+    end)
   end
 end

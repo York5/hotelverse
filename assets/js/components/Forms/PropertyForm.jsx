@@ -37,37 +37,32 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-const tempData = [
-  { value: "breakfast", label: "Breakfast" },
-  { value: "wifi", label: "Wi-Fi" },
-  { value: "bathtub", label: "Bathtub" },
-  { value: "kingsbed", label: "Kings Bed" },
-];
-
 const commonHeight = 48;
 
-const PropertyForm = ({ formTitle, property, handleInp, onSubmit }) => {
+const PropertyForm = ({
+  formTitle,
+  options,
+  property,
+  handleInp,
+  onSubmit,
+}) => {
   const classes = useStyles();
 
   const {
-    register,
     control,
     handleSubmit,
-    watch,
     formState: { errors },
   } = useForm();
 
-  // const onSubmit = (data) => console.log(data);
-  // console.log("render");
-
   const searchProps = {
-    placeholder: "Property features?",
+    placeholder: "Select Property Features",
     width: "100%",
     height: commonHeight,
     isMulti: true,
-    options: tempData,
+    options: options,
     hideDropdown: true,
     hideSeparator: true,
+    keepMenuOpen: true,
   };
 
   return (
@@ -145,14 +140,14 @@ const PropertyForm = ({ formTitle, property, handleInp, onSubmit }) => {
             )}
           />
           <Controller
-            name="imageUrl"
+            name="imageURLs"
             required={true}
             control={control}
             defaultValue=""
             render={({ field }) => (
               <TextField
                 {...field}
-                name="image"
+                name="imageURLs"
                 variant="outlined"
                 label="Images Bucket URL"
                 className={classes.textfield}

@@ -10,8 +10,8 @@ defmodule HotelverseWeb.API.V1.SessionController do
     |> Pow.Plug.authenticate_user(user_params)
     |> case do
       {:ok, conn} ->
-        IO.inspect({:ok, conn})
-        json(conn, %{data: %{access_token: conn.private.api_access_token, renewal_token: conn.private.api_renewal_token}})
+        resp = make_resp(conn, conn.assigns.current_user)
+        json(conn, resp)
 
       {:error, conn} ->
         conn
@@ -32,8 +32,9 @@ defmodule HotelverseWeb.API.V1.SessionController do
         |> put_status(401)
         |> json(%{error: %{status: 401, message: "Invalid token"}})
 
-      {conn, _user} ->
-        json(conn, %{data: %{access_token: conn.private.api_access_token, renewal_token: conn.private.api_renewal_token}})
+      {conn, user} ->
+        resp = make_resp(conn, user)
+        json(conn, resp)
     end
   end
 
@@ -42,5 +43,19 @@ defmodule HotelverseWeb.API.V1.SessionController do
     conn
     |> Pow.Plug.delete()
     |> json(%{data: %{}})
+  end
+
+  def make_resp(conn, user) do
+    %{
+      data: %{
+        user_id: user.id,
+        user_email: user.email,
+        user_first_name: user.first_name,
+        user_last_name: user.last_name,
+        user_role: user.role,
+        access_token: conn.private.api_access_token,
+        renewal_token: conn.private.api_renewal_token
+      }
+    }
   end
 end

@@ -11,15 +11,7 @@ defmodule HotelverseWeb.API.V1.RegistrationController do
     |> Pow.Plug.create_user(user_params)
     |> case do
       {:ok, user, conn} ->
-        resp = %{
-          data: %{
-            user_id: user.id,
-            user_email: user.email,
-            user_role: user.role,
-            access_token: conn.private.api_access_token,
-            renewal_token: conn.private.api_renewal_token
-          }
-        }
+        resp = HotelverseWeb.API.V1.SessionController.make_resp(conn, user)
         json(conn, resp)
 
       {:error, changeset, conn} ->

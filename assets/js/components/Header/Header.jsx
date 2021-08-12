@@ -16,6 +16,9 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import { Avatar, Button, Grid } from "@material-ui/core";
 import Searchbar from "./Searchbar";
 import { Link, useHistory } from "react-router-dom";
+import axios from "axios";
+import { URL_PATHS } from "../helpers/consts";
+import { useAuth } from "../contexts/AuthContext";
 
 const drawerWidth = 100;
 
@@ -109,7 +112,7 @@ const Header = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
   const history = useHistory();
-  console.log(history);
+  const { user, signOut } = useAuth();
 
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
@@ -217,21 +220,69 @@ const Header = () => {
               <Button
                 variant="contained"
                 color="secondary"
-                className={classes.addButton}
+                // className={classes.addButton}
               >
                 Become a Host
               </Button>
             </Link>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
+            {!user && (
+              <>
+                <Link to={URL_PATHS.SIGN_IN} style={{ textDecoration: "none" }}>
+                  <Button
+                    variant="link"
+                    color="secondary"
+                    // className={classes.addButton}
+                  >
+                    Sign in
+                  </Button>
+                </Link>
+                <Link to={URL_PATHS.SIGN_UP} style={{ textDecoration: "none" }}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    // className={classes.addButton}
+                  >
+                    Sign up
+                  </Button>
+                </Link>
+              </>
+            )}
+
+            {user && (
+              <>
+                <Link style={{ textDecoration: "none" }}>
+                  <Button
+                    variant="contained"
+                    color="secondary"
+                    onClick={signOut}
+                    // className={classes.addButton}
+                  >
+                    Sign out
+                  </Button>
+                </Link>
+                <IconButton
+                  edge="end"
+                  aria-label="account of current user"
+                  aria-controls={menuId}
+                  aria-haspopup="true"
+                  onClick={handleProfileMenuOpen}
+                  color="inherit"
+                >
+                  <Avatar src="/images/avatar.jpg">UK</Avatar>
+                </IconButton>
+              </>
+            )}
+
+            {/* <Link to="/registration/new" style={{ textDecoration: "none" }}>
+            <Button
+              onClick={handle_logout}
+              variant="contained"
+              color="secondary"
+              className={classes.addButton}
             >
-              <Avatar src="/images/avatar.jpg">UK</Avatar>
-            </IconButton>
+              Logout
+            </Button>
+            </Link> */}
           </div>
           <div className={classes.sectionMobile}>
             <IconButton

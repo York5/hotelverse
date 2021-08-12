@@ -18,29 +18,30 @@ import * as React from "react";
 import * as ReactDOM from "react-dom";
 import { createTheme, ThemeProvider } from "@material-ui/core/styles";
 import Routes from "./Routes/Routes";
+import AuthContextProvider from "./components/contexts/AuthContext";
 
 const theme = createTheme({
   palette: {
     type: "light",
-    primary: {
-      main: "#1562E0",
-      light: "#4193EA",
-    },
-    secondary: {
-      main: "#A9DE52",
-    },
-    // error: {},
-    // warning: {},
-    info: {
-      main: "#A8C1D3",
-    },
-    // success: {},
-    text: {
-      primary: "#000",
-      secondary: "#000",
-    },
+    // primary: {
+    //   main: "#1562E0",
+    //   light: "#4193EA",
+    // },
+    // secondary: {
+    //   main: "#A9DE52",
+    // },
+    // // error: {},
+    // // warning: {},
+    // info: {
+    //   main: "#A8C1D3",
+    // },
+    // // success: {},
+    // text: {
+    //   primary: "#000",
+    //   secondary: "#000",
+    // },
     background: {
-      paper: "#E1EEF7",
+      // paper: "#E1EEF7",
       default: "#E1EEF7",
     },
   },
@@ -53,8 +54,10 @@ if (theme.palette.type === "light") {
 }
 
 ReactDOM.render(
-  <ThemeProvider theme={theme}>
-    <Routes />
-  </ThemeProvider>,
+  <AuthContextProvider>
+    <ThemeProvider theme={theme}>
+      <Routes />
+    </ThemeProvider>
+  </AuthContextProvider>,
   document.getElementById("root")
 );

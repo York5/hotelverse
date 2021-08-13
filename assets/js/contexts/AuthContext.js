@@ -46,7 +46,10 @@ const reducer = (state = INIT_STATE, action) => {
       return {
         ...state,
         messageType: "success",
-        message: "Sign in successful",
+        message: {
+          title: `Hi, ${action.payload.user_last_name}`,
+          body: "Sign in successful!",
+        },
         user: action.payload,
       };
     case AUTH_ACTIONS.AUTH_ERROR:
@@ -61,8 +64,8 @@ const reducer = (state = INIT_STATE, action) => {
       return {
         ...state,
         user: null,
-        messageType: "success",
-        message: "Sign out successful",
+        messageType: null,
+        message: null,
       };
 
     default:
@@ -101,11 +104,13 @@ const AuthContextProvider = ({ children }) => {
         });
       }
     } catch (error) {
+      const message = {
+        title: error.response.data.error.message,
+        body: compileMessages(error.response.data.error.errors),
+      };
       dispatch({
         type: AUTH_ACTIONS.AUTH_ERROR,
-        payload: `${error.response.data.error.message}: ${compileMessages(
-          error.response.data.error.errors
-        )}`,
+        payload: message,
       });
     }
   }
@@ -123,7 +128,6 @@ const AuthContextProvider = ({ children }) => {
     dispatch({
       type: AUTH_ACTIONS.AUTH_SIGN_OUT,
     });
-    console.log(userCache.get(), state);
   }
 
   async function renewAuth(user) {
@@ -133,22 +137,21 @@ const AuthContextProvider = ({ children }) => {
       },
     };
     const { data } = await axios.post(API_AUTH_RENEW, {}, opts);
-    dispatch({
-      type: AUTH_ACTIONS.AUTH_SUCCESS,
-      payload: data.data,
-    });
+    if ((state.messageType /= "success")) {
+      dispatch({
+        type: AUTH_ACTIONS.AUTH_SUCCESS,
+        payload: data.data,
+      });
+    }
   }
 
   function checkAuth() {
     const cache = userCache.get();
     if (!cache) {
-      console.log("cache is empty");
-      // history.push("/signin");
     } else if (cache.exp <= Date.now()) {
       return;
-      // } else if (cache.exp > Date.now()) {
-    } else if (true) {
-      console.log(cache.exp, Date.now());
+    } else if (cache.exp > Date.now()) {
+      // } else if (true) {
       renewAuth(cache);
     }
   }

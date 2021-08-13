@@ -31,6 +31,7 @@ const useStyles = makeStyles({
   bookButton: {
     margin: "0 auto",
     borderRadius: 15,
+    margin: "0px 8px 16px 8px",
   },
   totalPrice: {
     marginRight: 50,
@@ -92,7 +93,7 @@ function returnOptions(array) {
   return array.map((option) => ({ value: option, label: option }));
 }
 
-export default function BookingForm() {
+export default function BookingForm({ property }) {
   const classes = useStyles();
   const {
     control,
@@ -109,7 +110,7 @@ export default function BookingForm() {
             variant="h5"
             className={classes.totalPrice}
           >
-            Total: $300/night
+            {`${property.price}$/night`}
           </Typography>
           <Chip
             style={{ backgroundColor: "#f73378", color: "#fff" }}
@@ -180,8 +181,9 @@ export default function BookingForm() {
 
       <CardActions>
         <Button
+          fullWidth
           variant="contained"
-          color="primary"
+          color="secondary"
           className={classes.bookButton}
         >
           Book Now

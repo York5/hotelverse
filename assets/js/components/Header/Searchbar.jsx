@@ -1,4 +1,4 @@
-import { Button, Grid, makeStyles, Toolbar } from "@material-ui/core";
+import { Button, div, makeStyles, Toolbar } from "@material-ui/core";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import React from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -19,24 +19,51 @@ const useStyles = makeStyles((theme) => ({
   searchForm: {
     display: "flex",
     justifyContent: "center",
-    position: "absolute",
-    bottom: -50,
+    // flexWrap: "wrap",
+    // position: "absolute",
+    // bottom: -50,
     width: "100%",
-
-    // height: 80,
+    position: "absolute",
+    top: "30vh",
   },
   searchBar: {
     height: "100%",
+    maxWidth: "80%",
     borderRadius: 8,
-    padding: "0 8px 0 8px",
-    backgroundColor: theme.palette.background.paper,
+    padding: "8px 8px 8px 8px",
     color: theme.palette.grey,
     boxShadow: "1px 2px 3px rgba(0,0,0,.5)",
+    backgroundColor: theme.palette.background.paper,
+  },
+  searchBarWrapper: {
+    display: "flex",
+    justifyContent: "center",
+    flexWrap: "wrap",
+  },
+  searchBarRow: {
+    display: "flex",
+    maxWidth: 450,
+    margin: "8px 0px 8px 0px",
   },
   searchBarItem: {
     height: "100%",
     display: "flex",
-    alignItems: "center",
+    // alignItems: "center",
+    padding: "0 4px 0 4px",
+  },
+  checkInPicker: {
+    height: "100%",
+    display: "flex",
+    // alignItems: "center",
+    padding: "0 4px 0 4px",
+    minWidth: 120,
+  },
+  checkOutPicker: {
+    height: "100%",
+    display: "flex",
+    // alignItems: "center",
+    padding: "0 4px 0 4px",
+    minWidth: 120,
   },
   searchIcon: {
     color: theme.palette.info.main,
@@ -44,6 +71,7 @@ const useStyles = makeStyles((theme) => ({
   },
   buttonFind: {
     height: commonHeight,
+    minWidth: 120,
     // borderRadius: "0 16px 16px 0",
     borderRadius: 8,
     fontSize: 16,
@@ -55,7 +83,6 @@ const useStyles = makeStyles((theme) => ({
 const Searchbar = () => {
   const classes = useStyles();
   const {
-    register,
     control,
     handleSubmit,
     watch,
@@ -63,8 +90,6 @@ const Searchbar = () => {
   } = useForm();
 
   const onSubmit = (data) => console.log(data);
-
-  console.log(watch("example")); // watch input value by passing the name of it
 
   function returnOptions(array) {
     return array.map((option) => ({ value: option, label: option }));
@@ -100,67 +125,69 @@ const Searchbar = () => {
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={classes.searchForm}>
-      <Toolbar>
-        <Grid
-          container
-          spacing={1}
-          alignItems="center"
-          className={classes.searchBar}
-        >
-          <Grid item className={classes.searchBarItem}>
-            <Controller
-              name="searchString"
-              required={true}
-              control={control}
-              defaultValue=""
-              render={({ field }) => (
-                <SearchableSelect {...field} customProps={{ ...searchProps }} />
-              )}
-            />
-          </Grid>
-          <Grid item className={classes.searchBarItem}>
-            <Controller
-              name="adultsCount"
-              required={true}
-              control={control}
-              render={({ field }) => (
-                <SearchableSelect
-                  {...field}
-                  customProps={{ ...adultsSelectProps }}
-                />
-              )}
-            />
-          </Grid>
-          <Grid item className={classes.searchBarItem}>
-            <Controller
-              name="childrenCount"
-              control={control}
-              render={({ field }) => (
-                <SearchableSelect
-                  {...field}
-                  customProps={{ ...childrenSelectProps }}
-                />
-              )}
-            />
-          </Grid>
-          <Grid item xs className={classes.searchBarItem}>
-            <DateSelect label="Check in" />
-          </Grid>
-          <Grid item xs className={classes.searchBarItem}>
-            <DateSelect label="Check out" />
-          </Grid>
-          <Grid item xs={2} className={classes.searchBarItem}>
-            <Button
-              fullWidth
-              type="submit"
-              variant="contained"
-              color="secondary"
-              className={classes.buttonFind}
-            >
-              Find Now
-            </Button>
-          </Grid>
-        </Grid>
+      <Toolbar className={classes.searchBar}>
+        <div className={classes.searchBarWrapper}>
+          <div className={classes.searchBarRow}>
+            <div className={classes.searchBarItem}>
+              <Controller
+                name="searchString"
+                required={true}
+                control={control}
+                defaultValue=""
+                render={({ field }) => (
+                  <SearchableSelect
+                    {...field}
+                    customProps={{ ...searchProps }}
+                  />
+                )}
+              />
+            </div>
+            <div className={classes.searchBarItem}>
+              <Controller
+                name="adultsCount"
+                required={true}
+                control={control}
+                render={({ field }) => (
+                  <SearchableSelect
+                    {...field}
+                    customProps={{ ...adultsSelectProps }}
+                  />
+                )}
+              />
+            </div>
+            <div className={classes.searchBarItem}>
+              <Controller
+                name="childrenCount"
+                control={control}
+                render={({ field }) => (
+                  <SearchableSelect
+                    {...field}
+                    customProps={{ ...childrenSelectProps }}
+                  />
+                )}
+              />
+            </div>
+          </div>
+          <div className={classes.searchBarRow}>
+            <div className={classes.checkInPicker}>
+              <DateSelect label="Check in" />
+            </div>
+            <div className={classes.checkOutPicker}>
+              <DateSelect label="Check out" />
+            </div>
+            <div className={classes.searchBarItem}>
+              <Button
+                fullWidth
+                type="submit"
+                variant="contained"
+                color="secondary"
+                className={classes.buttonFind}
+              >
+                Find Now
+              </Button>
+            </div>
+          </div>
+        </div>
       </Toolbar>
     </form>
   );

@@ -42,7 +42,7 @@ defmodule Hotelverse.Users.User do
     ]
 
     Enum.map(data, fn user ->
-      IO.inspect(Hotelverse.Users.create(user))
+      Hotelverse.Users.create(user)
       # Pow.Ecto.Context.create(user)
       # pow_create
       # Pow.Plug.create_user(%{private: %{}}, user)

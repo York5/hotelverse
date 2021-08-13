@@ -33,17 +33,9 @@ export default function DetailChips({ rating }) {
 
   return (
     <div className={classes.root}>
-      <Chip
-        icon={<StarIcon />}
-        label={"5.0 Perfect"}
-        clickable
-        onDelete={handleDelete}
-        deleteIcon={<DoneIcon />}
-        variant="outlined"
-      />
-      <Chip label="Hotels" clickable color="primary" variant="outlined" />
+      <Chip label="Hotels" clickable color="default" />
       <Chip label="New Building" clickable color="primary" variant="outlined" />
-      <Chip label="Hot value" clickable color="primary" variant="outlined" />
+      <Chip label="Hot value" clickable color="secondary" variant="outlined" />
       <Box component="fieldset" mb={3} borderColor="transparent">
         <Typography component="legend"></Typography>
         <Rating name="read-only" value={rating} readOnly />

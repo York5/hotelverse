@@ -31,6 +31,7 @@ defmodule HotelverseWeb.Router do
   scope "/api/v1", HotelverseWeb do
     pipe_through :api
 
+    resources "/properties", PropertyController
     resources "/properties", PropertyController, only: [:index, :show]
     # resources "/images", ImageController, only: [:index, :show]
     # resources "/extras", ExtraController, only: [:index, :show]

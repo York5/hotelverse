@@ -1,12 +1,12 @@
 import React from "react";
-import BookingDetailsBody from "../components/BookingDetails/BookingDetailsBody";
+import PropertyDetails from "../components/BookingDetails/PropertyDetails";
 import FeaturedBody from "../components/Featured/FeaturedBody";
 import MainLayout from "../Layouts/MainLayout";
 
 const DetailPage = () => {
   return (
     <MainLayout>
-      <BookingDetailsBody />
+      <PropertyDetails />
     </MainLayout>
   );
 };

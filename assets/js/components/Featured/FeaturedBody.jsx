@@ -1,6 +1,7 @@
 import {
   Box,
   Button,
+  Icon,
   IconButton,
   makeStyles,
   Paper,
@@ -16,6 +17,7 @@ import StarIcon from "@material-ui/icons/Star";
 import LocationOnOutlinedIcon from "@material-ui/icons/LocationOnOutlined";
 import { Link } from "react-router-dom";
 import { URL_PATHS } from "./../../helpers/consts";
+import { NavigateBefore, NavigateNext } from "@material-ui/icons";
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -32,8 +34,9 @@ const useStyles = makeStyles((theme) => {
       width: 430,
     },
     carouselContainer: {
-      margin: "0 10px 0 110px",
+      marginTop: 10,
     },
+
     carouselButtons: {
       width: 150,
     },
@@ -163,14 +166,18 @@ export default function FeaturedBody() {
             variant="contained"
             className={classes.buttonShape}
           >
-            {"<"}
+            <Icon>
+              <NavigateBefore />
+            </Icon>
           </Button>
           <Button
             onClick={() => carousel.slideNext()}
             variant="contained"
             className={classes.buttonShape}
           >
-            {">"}
+            <Icon>
+              <NavigateNext />
+            </Icon>
           </Button>
         </div>
       </div>
@@ -241,7 +248,7 @@ export default function FeaturedBody() {
         ))}
       </Carousel>
       <Paper className={classes.navPaper}>
-        <Link to={URL_PATHS.PROPERTIES_LIST}>
+        <Link to={URL_PATHS.PROPERTIES_LIST} style={{ textDecoration: "none" }}>
           <Button className={(classes.navItem, classes.showMore)}>
             Show More
           </Button>

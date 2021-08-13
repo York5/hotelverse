@@ -4,7 +4,7 @@ import Snackbar from "@material-ui/core/Snackbar";
 import Slide from "@material-ui/core/Slide";
 import { useAuth } from "./../../contexts/AuthContext";
 import { useEffect } from "react";
-import { Alert } from "@material-ui/lab";
+import { Alert, AlertTitle } from "@material-ui/lab";
 
 function TransitionLeft(props) {
   return <Slide {...props} direction="left" />;
@@ -46,7 +46,10 @@ const NotificationsBar = () => {
           TransitionComponent={transition}
           key={transition ? transition.name : ""}
         >
-          <Alert severity={messageType}>{message}</Alert>
+          <Alert severity={messageType}>
+            <AlertTitle>{message.title}</AlertTitle>
+            {message.body}
+          </Alert>
         </Snackbar>
       )}
     </>

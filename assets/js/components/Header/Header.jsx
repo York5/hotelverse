@@ -16,31 +16,56 @@ import MoreIcon from "@material-ui/icons/MoreVert";
 import { Avatar, Button, Grid } from "@material-ui/core";
 import Searchbar from "./Searchbar";
 import { Link, useHistory } from "react-router-dom";
-import axios from "axios";
-import { URL_PATHS } from "./../../helpers/consts";
+import { BAR_SIZE, URL_PATHS } from "./../../helpers/consts";
 import { useAuth } from "./../../contexts/AuthContext";
 
-const drawerWidth = 100;
-
 const useStyles = makeStyles((theme) => {
-  // console.log(theme);
   return {
     grow: {
       flexGrow: 1,
+      backgroundColor: "#ffffff00 !important",
     },
     appBar: {
-      position: "relative",
-      // height: 130,
-      width: `calc(100% - ${drawerWidth}px)`,
-      marginLeft: drawerWidth,
+      width: `calc(100% - ${BAR_SIZE}px)`,
+      marginLeft: BAR_SIZE,
+      [theme.breakpoints.down("xs")]: {
+        width: "100%",
+        marginLeft: 0,
+      },
+      backgroundColor: "#ffffff00 !important",
     },
     topBar: {
       backgroundColor: theme.palette.primary.light,
     },
-    // landingBannerImg: {
-    //     background: `${landingBanner} no-repeat center center fixed`,
-    //     backgroundSize: "cover",
-    // },
+    companyName: {
+      textTransform: "capitalize",
+      fontSize: 22,
+      fontWeight: 600,
+      color: "#fff",
+    },
+    signInBtn: {
+      textTransform: "capitalize",
+      fontWeight: 800,
+      color: "#fff",
+    },
+    signUpBtn: {
+      textTransform: "capitalize",
+      fontWeight: 800,
+      // color: "#A8C1D3",
+    },
+    hostBtn: {
+      textTransform: "capitalize",
+      fontWeight: 800,
+    },
+
+    landingBannerImg: {
+      backgroundImage: "url(/images/mountainBanner.jpg)",
+      minHeight: "40vh",
+      backgroundAttachment: "fixed",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      backgroundSize: "cover",
+    },
     menuButton: {
       marginRight: theme.spacing(2),
     },
@@ -117,6 +142,11 @@ const Header = () => {
   const isMenuOpen = Boolean(anchorEl);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
+  const handleSignOut = () => {
+    signOut();
+    handleMenuClose();
+  };
+
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
   };
@@ -146,7 +176,7 @@ const Header = () => {
       onClose={handleMenuClose}
     >
       <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
+      <MenuItem onClick={handleSignOut}>Sign out</MenuItem>
     </Menu>
   );
 
@@ -161,24 +191,11 @@ const Header = () => {
       open={isMobileMenuOpen}
       onClose={handleMobileMenuClose}
     >
-      <MenuItem>
-        <IconButton aria-label="show 4 new mails" color="inherit">
-          <Badge badgeContent={4} color="secondary">
-            <MailIcon />
-          </Badge>
-        </IconButton>
-        <p>Messages</p>
-      </MenuItem>
-      <MenuItem onClick={handleProfileMenuOpen}>
-        <IconButton
-          aria-label="account of current user"
-          aria-controls="primary-search-account-menu"
-          aria-haspopup="true"
-          color="inherit"
-        >
+      <MenuItem onClick={handleSignOut}>
+        <IconButton color="inherit">
           <AccountCircle />
         </IconButton>
-        <p>Profile</p>
+        <p>Sign out</p>
       </MenuItem>
     </Menu>
   );
@@ -206,110 +223,104 @@ const Header = () => {
   };
 
   return (
-    <div className={classes.grow}>
-      <AppBar
-        className={classes.appBar}
-        position="static"
-        style={{ marginBottom: 100 }}
-      >
-        <Toolbar className={classes.topBar}>
-          {renderMiniSearchBar()}
-          <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
-            <Link
-              to={URL_PATHS.PROPERTIES_CREATE}
-              style={{ textDecoration: "none" }}
-            >
+    <>
+      <div className={classes.grow}>
+        <AppBar className={classes.appBar} position="sticky">
+          <Toolbar className={classes.topBar}>
+            <Link to="#" style={{ textDecoration: "none" }}>
               <Button
-                variant="contained"
-                color="secondary"
-                // className={classes.addButton}
+                variant="text"
+                // color="secondary"
+                className={classes.companyName}
               >
-                Become a Host
+                Hotelverse
               </Button>
             </Link>
-            {!user && (
-              <>
-                <Link to={URL_PATHS.SIGN_IN} style={{ textDecoration: "none" }}>
-                  <Button
-                    variant="outlined"
-                    color="secondary"
-                    // className={classes.addButton}
-                  >
-                    Sign in
-                  </Button>
-                </Link>
-                <Link to={URL_PATHS.SIGN_UP} style={{ textDecoration: "none" }}>
-                  <Button
-                    variant="contained"
-                    color="secondary"
-                    // className={classes.addButton}
-                  >
-                    Sign up
-                  </Button>
-                </Link>
-              </>
-            )}
 
-            {user && (
-              <>
-                <Button
-                  variant="contained"
-                  color="secondary"
-                  size="small"
-                  onClick={signOut}
-                  // className={classes.addButton}
-                >
-                  Sign out
-                </Button>
-                <IconButton
-                  edge="end"
-                  aria-label="account of current user"
-                  aria-controls={menuId}
-                  aria-haspopup="true"
-                  onClick={handleProfileMenuOpen}
-                  color="inherit"
-                >
-                  <Avatar src="/images/avatar.jpg">UK</Avatar>
-                </IconButton>
-              </>
-            )}
+            {renderMiniSearchBar()}
+            <div className={classes.grow} />
+            <div className={classes.sectionDesktop}>
+              {!user && (
+                <>
+                  <Link
+                    to={URL_PATHS.SIGN_IN}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Button
+                      variant="text"
+                      // color="secondary"
+                      className={classes.signInBtn}
+                    >
+                      Sign in
+                    </Button>
+                  </Link>
+                  <Link
+                    to={URL_PATHS.SIGN_UP}
+                    style={{ textDecoration: "none" }}
+                  >
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      className={classes.signUpBtn}
+                    >
+                      Sign up
+                    </Button>
+                  </Link>
+                </>
+              )}
 
-            {/* <Link to="/registration/new" style={{ textDecoration: "none" }}>
-            <Button
-              onClick={handle_logout}
-              variant="contained"
-              color="secondary"
-              className={classes.addButton}
-            >
-              Logout
-            </Button>
-            </Link> */}
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              aria-label="show more"
-              aria-controls={mobileMenuId}
-              aria-haspopup="true"
-              onClick={handleMobileMenuOpen}
-              color="inherit"
-            >
-              <MoreIcon />
-            </IconButton>
-          </div>
-        </Toolbar>
-        <Grid style={{ backgroundColor: "#E1EEF7" }}>
-          <img
-            style={{ width: "100%" }}
-            src="/images/mountainBanner.jpg"
-            alt="Banner"
-          />
-        </Grid>
-        {history.location.pathname === "/" ? <Searchbar /> : null}
-      </AppBar>
-      {renderMobileMenu}
-      {renderMenu}
-    </div>
+              {user && (
+                <>
+                  <Link
+                    to={URL_PATHS.PROPERTIES_CREATE}
+                    style={{
+                      textDecoration: "none",
+                      display: "flex",
+                      alignItems: "center",
+                      marginRight: 12,
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      color="secondary"
+                      className={classes.hostBtn}
+                    >
+                      Become a Host
+                    </Button>
+                  </Link>
+
+                  <IconButton
+                    edge="end"
+                    aria-label="account of current user"
+                    aria-controls={menuId}
+                    aria-haspopup="true"
+                    onClick={handleProfileMenuOpen}
+                    color="inherit"
+                  >
+                    <Avatar src="/images/avatar.jpg">UK</Avatar>
+                  </IconButton>
+                </>
+              )}
+            </div>
+            <div className={classes.sectionMobile}>
+              <IconButton
+                aria-label="show more"
+                aria-controls={mobileMenuId}
+                aria-haspopup="true"
+                onClick={handleMobileMenuOpen}
+                color="inherit"
+              >
+                <MoreIcon />
+              </IconButton>
+            </div>
+          </Toolbar>
+          {history.location.pathname === "/" ? <Searchbar /> : null}
+        </AppBar>
+        <Grid className={classes.landingBannerImg}></Grid>
+        {renderMobileMenu}
+        {renderMenu}
+      </div>
+    </>
   );
 };
 

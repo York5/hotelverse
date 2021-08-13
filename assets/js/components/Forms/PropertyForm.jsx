@@ -8,10 +8,11 @@ import { Controller, useForm } from "react-hook-form";
 const useStyles = makeStyles((theme) => ({
   paper: {
     padding: theme.spacing(2),
-    marginLeft: 100,
+    margin: "auto",
     maxWidth: "100%",
     display: "flex",
     justifyContent: "center",
+    borderRadius: 20,
   },
   title: {
     textAlign: "center",
@@ -45,6 +46,7 @@ const PropertyForm = ({
   property,
   handleInp,
   onSubmit,
+  isEditMode,
 }) => {
   const classes = useStyles();
 
@@ -65,6 +67,13 @@ const PropertyForm = ({
     keepMenuOpen: true,
   };
 
+  function gatherParams(formData) {
+    if (isEditMode) {
+      formData.id = property.id;
+      onSubmit(formData);
+    }
+  }
+
   return (
     <Paper elevation={3} className={classes.paper}>
       <Container className={classes.container}>
@@ -73,13 +82,13 @@ const PropertyForm = ({
           className={classes.form}
           noValidate
           autoComplete="off"
-          onSubmit={handleSubmit(onSubmit)}
+          onSubmit={handleSubmit(gatherParams)}
         >
           <Controller
             name="title"
             required={true}
             control={control}
-            defaultValue=""
+            defaultValue={isEditMode && property.title}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -95,7 +104,7 @@ const PropertyForm = ({
             name="description"
             required={true}
             control={control}
-            defaultValue=""
+            defaultValue={isEditMode && property.description}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -111,7 +120,7 @@ const PropertyForm = ({
             name="location"
             required={true}
             control={control}
-            defaultValue=""
+            defaultValue={isEditMode && property.location}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -127,7 +136,7 @@ const PropertyForm = ({
             name="price"
             required={true}
             control={control}
-            defaultValue=""
+            defaultValue={isEditMode && property.price}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -143,7 +152,7 @@ const PropertyForm = ({
             name="imageURLs"
             required={true}
             control={control}
-            defaultValue=""
+            defaultValue={isEditMode && property.images.join(";")}
             render={({ field }) => (
               <TextField
                 {...field}
@@ -160,7 +169,14 @@ const PropertyForm = ({
             name="features"
             required={true}
             control={control}
-            defaultValue=""
+            defaultValue={
+              isEditMode &&
+              property.features.map((feature) => ({
+                value: feature.id,
+                label: feature.name,
+                icon: feature.icon,
+              }))
+            }
             render={({ field }) => (
               <SearchableSelect {...field} customProps={{ ...searchProps }} />
             )}

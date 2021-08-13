@@ -1262,7 +1262,6 @@ defmodule Hotelverse.Properties.Property do
         "description" => property.description,
         "images" => [property.image|property.detail_images]
       }
-      IO.inspect(property_params)
       Hotelverse.Properties.create_property(property_params)
     end)
   end

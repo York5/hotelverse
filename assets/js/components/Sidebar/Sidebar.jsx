@@ -1,6 +1,5 @@
-import React from "react";
-import clsx from "clsx";
-import { makeStyles, useTheme } from "@material-ui/core/styles";
+import React, { useState } from "react";
+import { makeStyles } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
 import List from "@material-ui/core/List";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -10,81 +9,45 @@ import HomeIcon from "@material-ui/icons/Home";
 import FavoriteIcon from "@material-ui/icons/Favorite";
 import NotificationsIcon from "@material-ui/icons/Notifications";
 import LocalOfferIcon from "@material-ui/icons/LocalOffer";
-import { Box } from "@material-ui/core";
+import { Box, Tooltip } from "@material-ui/core";
 import SettingsIcon from "@material-ui/icons/Settings";
 import { Link } from "react-router-dom";
-
-const drawerWidth = 100;
+import { BAR_SIZE, URL_PATHS } from "../../helpers/consts";
 
 const useStyles = makeStyles((theme) => ({
-  root: {
-    display: "flex",
+  verticalBar: {
+    width: BAR_SIZE,
+    // display: "block",
+    [theme.breakpoints.down("xs")]: {
+      display: "none",
+    },
   },
-  appBar: {
-    zIndex: theme.zIndex.drawer + 1,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
+  horizontalBar: {
+    [theme.breakpoints.down("xs")]: {
+      display: "block",
+    },
   },
-  hide: {
-    display: "none",
-  },
+
   drawer: {
-    width: drawerWidth,
     flexShrink: 0,
     whiteSpace: "nowrap",
   },
-  drawerOpen: {
-    width: drawerWidth,
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen,
-    }),
-  },
-  drawerClose: {
-    transition: theme.transitions.create("width", {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.leavingScreen,
-    }),
-    overflowX: "hidden",
-    width: theme.spacing(7) + 1,
-    [theme.breakpoints.up("sm")]: {
-      width: theme.spacing(9) + 1,
-    },
-  },
   drawerPaper: {
     backgroundColor: theme.palette.primary.main,
-    width: drawerWidth,
-    marginRight: 100,
-  },
-  toolbar: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: theme.spacing(0, 1),
-    // necessary for content to be below app bar
-    ...theme.mixins.toolbar,
-  },
-  content: {
-    flexGrow: 1,
-    padding: theme.spacing(3),
+    width: BAR_SIZE,
   },
   //   Sidebar Icons
   sidebarIcon: {
-    margin: 10,
+    margin: "10px 0 10px 0",
     width: 25,
     height: 25,
   },
-  sidebarSettings: {},
-  sidebarInner: {},
   sidebarLogo: {
-    height: 60,
-    width: 60,
-    borderRadius: 50,
+    height: 48,
+    width: 48,
   },
-  sidebarContainer: {
-    alignItems: "center",
+  logoWrapper: {
+    display: "flex",
     justifyContent: "center",
   },
   sidebarList: {
@@ -94,9 +57,6 @@ const useStyles = makeStyles((theme) => ({
     minHeight: "100vh",
     alignItems: "center",
   },
-  drawerWrapper: {
-    width: 130,
-  },
   listItem: {
     justifyContent: "center",
   },
@@ -104,74 +64,82 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Sidebar() {
   const classes = useStyles();
-  const theme = useTheme();
-  const [open, setOpen] = React.useState(false);
-  const handleDrawerOpen = () => {
-    setOpen(true);
-  };
-  const handleDrawerClose = () => {
-    setOpen(false);
-  };
+  const [open, setOpen] = useState(false);
 
   return (
-    <div className={classes.root}>
+    <div className={classes.verticalBar}>
       <CssBaseline />
       <Drawer
         variant="permanent"
-        className={clsx(classes.drawer, {
-          [classes.drawerOpen]: open,
-          [classes.drawerClose]: !open,
-        })}
-        className={classes.sidebarContainer}
+        className={classes.drawer}
         classes={{
           paper: classes.drawerPaper,
         }}
       >
         <List className={classes.sidebarList}>
-          <Box>
-            <ListItem button key={"Home"}>
+          <Link to={URL_PATHS.HOME}>
+            <ListItem className={classes.logoWrapper}>
               <img
                 className={classes.sidebarLogo}
                 src="/images/logo.png"
                 alt="Logo"
               />
             </ListItem>
-          </Box>
+          </Link>
 
           <Box className={classes.sidebarInner}>
-            <Link to="/">
-              <ListItem button key={"Home"}>
-                <ListItemIcon className={classes.listItem}>
-                  <HomeIcon className={classes.sidebarIcon} />
-                </ListItemIcon>
-              </ListItem>
-            </Link>
+            <Tooltip title="Homepage" placement="top-start">
+              <Link to={URL_PATHS.HOME}>
+                <ListItem button key={"Home"}>
+                  <ListItemIcon className={classes.listItem}>
+                    <HomeIcon className={classes.sidebarIcon} />
+                  </ListItemIcon>
+                </ListItem>
+              </Link>
+            </Tooltip>
 
-            <ListItem button key={"Favorites"}>
-              <ListItemIcon className={classes.listItem}>
-                <FavoriteIcon className={classes.sidebarIcon} />
-              </ListItemIcon>
-            </ListItem>
+            <Tooltip title="Favorites" placement="top-start">
+              <Link to={URL_PATHS.FAVOURITES}>
+                <ListItem button key={"Favorites"}>
+                  <ListItemIcon className={classes.listItem}>
+                    <FavoriteIcon className={classes.sidebarIcon} />
+                  </ListItemIcon>
+                </ListItem>
+              </Link>
+            </Tooltip>
 
-            <ListItem button key={"Bookings"}>
-              <ListItemIcon className={classes.listItem}>
-                <LocalOfferIcon className={classes.sidebarIcon} />
-              </ListItemIcon>
-            </ListItem>
+            <Tooltip title="Bookings" placement="top-start">
+              {/* <Link to={URL_PATHS.BOOKINGS}> */}
+              <Link to={URL_PATHS.CHECKOUT}>
+                <ListItem button key={"Bookings"}>
+                  <ListItemIcon className={classes.listItem}>
+                    <LocalOfferIcon className={classes.sidebarIcon} />
+                  </ListItemIcon>
+                </ListItem>
+              </Link>
+            </Tooltip>
 
-            <ListItem button key={"Notifications"}>
-              <ListItemIcon className={classes.listItem}>
-                <NotificationsIcon className={classes.sidebarIcon} />
-              </ListItemIcon>
-            </ListItem>
+            <Tooltip title="Notifications" placement="top-start">
+              <Link to={URL_PATHS.NOTIFICATIONS}>
+                <ListItem button key={"Notifications"}>
+                  <ListItemIcon className={classes.listItem}>
+                    <NotificationsIcon className={classes.sidebarIcon} />
+                  </ListItemIcon>
+                </ListItem>
+              </Link>
+            </Tooltip>
           </Box>
 
-          <Box className={classes.sidebarSettings}>
-            <ListItem button key={"Settings"}>
-              <ListItemIcon className={classes.listItem}>
-                <SettingsIcon className={classes.sidebarIcon} />
-              </ListItemIcon>
-            </ListItem>
+          <Box>
+            <Tooltip title="Settings" placement="top-start">
+              <Link to={URL_PATHS.SETTINGS}>
+                <ListItem button key={"Settings"}>
+                  <ListItemIcon className={classes.listItem}>
+                    <SettingsIcon className={classes.sidebarIcon} />
+                  </ListItemIcon>
+                </ListItem>
+              </Link>
+            </Tooltip>
           </Box>
         </List>
       </Drawer>

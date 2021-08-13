@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
@@ -13,11 +13,14 @@ const useStyles = makeStyles({
   navItem: {
     margin: "0 0",
     minWidth: "auto",
+    fontWeight: 600,
+    color: "#000",
+    textTransform: "capitalize",
   },
 });
 
-export default function BookingDetailsTabs() {
-  const [value, setValue] = React.useState(0);
+export default function PropertyDetailsTabs() {
+  const [value, setValue] = useState(0);
   const classes = useStyles();
 
   const handleChange = (event, newValue) => {
@@ -33,9 +36,9 @@ export default function BookingDetailsTabs() {
         onChange={handleChange}
       >
         <Tab className={classes.navItem} label="Description" />
-        <Tab className={classes.navItem} label="Features" />
-        <Tab className={classes.navItem} label="Virtual" />
-        <Tab className={classes.navItem} label="Price & Task history" />
+        <Tab className={classes.navItem} label="Facilities" />
+        <Tab className={classes.navItem} label="Availability" />
+        <Tab className={classes.navItem} label="Rates" />
       </Tabs>
     </Paper>
   );

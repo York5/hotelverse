@@ -47,7 +47,6 @@ const SignUp = () => {
 
   const { control, handleSubmit } = useForm();
   function onSubmit(data) {
-    console.log(data);
     signUp(data);
   }
 

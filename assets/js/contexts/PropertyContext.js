@@ -14,6 +14,7 @@ const INIT_STATE = {
   propertiesData: [],
   propertyDetails: {},
   features: [],
+  isEditMode: false,
 };
 
 const reducer = (state = INIT_STATE, action) => {
@@ -24,6 +25,12 @@ const reducer = (state = INIT_STATE, action) => {
       return { ...state, propertiesData: action.payload };
     case ACTIONS.GET_PROPERTY_DETAILS:
       return { ...state, propertyDetails: action.payload };
+    case ACTIONS.OPEN_EDIT_PROPERTY:
+      return { ...state, isEditMode: true };
+    case ACTIONS.EDIT_PROPERTY:
+      return { ...state, isEditMode: false };
+    case ACTIONS.DELETE_PROPERTY:
+      return { ...state, propertyDetails: {} };
     default:
       return state;
   }
@@ -37,7 +44,6 @@ const PropertyContextProvider = ({ children }) => {
   async function getFeatures() {
     const opts = attachAuth({});
     const { data } = await axios.get(API_FEATURES, {}, opts);
-    console.log(data);
 
     dispatch({
       type: ACTIONS.GET_FEATURES,
@@ -63,7 +69,6 @@ const PropertyContextProvider = ({ children }) => {
   }
 
   async function addProperty(property) {
-    console.log(property);
     const opts = attachAuth({});
     const { data } = await axios.post(
       API_PROPERTIES,
@@ -71,6 +76,33 @@ const PropertyContextProvider = ({ children }) => {
       opts
     );
     return data.data;
+  }
+
+  function openEditMode() {
+    dispatch({
+      type: ACTIONS.OPEN_EDIT_PROPERTY,
+    });
+  }
+
+  async function editProperty(property) {
+    const opts = attachAuth({});
+    const { data } = await axios.put(
+      `${API_PROPERTIES}/${property.id}`,
+      { property: property },
+      opts
+    );
+    dispatch({
+      type: ACTIONS.EDIT_PROPERTY,
+    });
+  }
+
+  async function deleteProperty(id) {
+    const opts = attachAuth({});
+    const { data } = await axios.delete(`${API_PROPERTIES}/${id}`, {}, opts);
+    dispatch({
+      type: ACTIONS.DELETE_PROPERTY,
+    });
+    await getPropertiesData();
   }
 
   const values = {
@@ -82,6 +114,10 @@ const PropertyContextProvider = ({ children }) => {
     getPropertiesData,
     getPropertyDetails,
     addProperty,
+    deleteProperty,
+    openEditMode,
+    isEditMode: state.isEditMode,
+    editProperty,
   };
 
   return (

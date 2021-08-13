@@ -18,7 +18,7 @@ const copyTheme = makeStyles((theme) => {
   });
 });
 
-const DateSelect = ({ label }) => {
+const DateSelect = ({ label, minWidth, maxWidth }) => {
   const [selectedDate, setSelectedDate] = React.useState(new Date());
   copyTheme();
   datePickerTheme.palette.secondary.main = "#A8C1D3";
@@ -31,6 +31,7 @@ const DateSelect = ({ label }) => {
     <ThemeProvider theme={datePickerTheme}>
       <MuiPickersUtilsProvider utils={DateFnsUtils}>
         <KeyboardDatePicker
+          style={{ minWidth, maxWidth }}
           disableToolbar
           disablePast
           variant="inline"
